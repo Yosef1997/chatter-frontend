@@ -1,42 +1,32 @@
 import React, {Component} from 'react';
-import {Text, View, Image, StyleSheet} from 'react-native';
-import ProfileImg from '../../assets/F9.jpg';
-import Icon from 'react-native-vector-icons/AntDesign';
+import {Text, View, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default class index extends Component {
   render() {
     return (
-      <View style={styles.card}>
-        <Image source={ProfileImg} style={styles.cardImg} />
+      <View style={this.props.style}>
+        <View style={this.props.card}>
+          <Icon name={this.props.icon1} size={this.props.size} />
+          <Text style={this.props.textStyle}>{this.props.text}</Text>
+        </View>
+        <Image source={this.props.source} style={this.props.image} />
         <View style={styles.cardText}>
           <Text style={styles.label}>{this.props.label}</Text>
           <Text style={styles.message}>{this.props.message}</Text>
         </View>
-        <Icon
-          name={this.props.icon}
-          size={this.props.size}
-          style={styles.icon}
-        />
+        <TouchableOpacity>
+          <Icon name={this.props.icon2} size={this.props.size} />
+        </TouchableOpacity>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  card: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
-    backgroundColor: 'white',
-  },
   cardText: {
     flex: 1,
     marginLeft: 10,
-  },
-  cardImg: {
-    height: 50,
-    width: 50,
-    borderRadius: 50,
   },
   label: {
     fontSize: 16,
