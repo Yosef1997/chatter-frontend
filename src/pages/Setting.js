@@ -5,7 +5,7 @@ export default class Profil extends Component {
   render() {
     return (
       <View>
-        <Text> Other </Text>
+        <Text> Setting </Text>
       </View>
     );
   }

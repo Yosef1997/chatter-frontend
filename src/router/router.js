@@ -3,7 +3,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from '../pages/Home';
 import ChatScreen from '../pages/Chat';
-import OtherScreen from '../pages/Other';
+import SettingScreen from '../pages/Setting';
 import SplashScreen from 'react-native-splash-screen';
 
 const Tab = createBottomTabNavigator();
@@ -45,8 +45,8 @@ export default class router extends Component {
           }}
         />
         <Tab.Screen
-          name="Other"
-          component={OtherScreen}
+          name="Setting"
+          component={SettingScreen}
           options={{
             tabBarIcon: ({size, color}) => (
               <Ionicons
