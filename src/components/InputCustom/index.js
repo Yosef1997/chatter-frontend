@@ -30,8 +30,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 10,
+    marginHorizontal: 10,
+    marginTop: 10,
     borderColor: '#eaeaea',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   input: {
     flex: 1,
