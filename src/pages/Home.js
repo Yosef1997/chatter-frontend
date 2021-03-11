@@ -9,29 +9,32 @@ import ProfileImg from '../assets/F9.jpg';
 export default class Home extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <ImageBackground source={BackImg} style={styles.backImgage}>
-          <CardProfile
-            source={ProfileImg}
-            label="Yosef"
-            message="hello"
-            icon2="settings-outline"
-            size={25}
-            style={styles.card}
-            image={styles.cardImg}
-          />
-          <Search Icon="search1" />
-          <Picker icon1="persons" text="Groups" />
-          <Picker icon1="person" text="Friends" />
-        </ImageBackground>
-      </View>
+      <ImageBackground source={BackImg} style={styles.backImgage}>
+        <CardProfile
+          source={ProfileImg}
+          label="Yosef"
+          message="hello"
+          icon2="settings-outline"
+          size={25}
+          style={styles.card}
+          image={styles.cardImg}
+        />
+        <Search Icon="search1" size={15} container={styles.container} />
+        <Picker icon1="persons" text="Groups" />
+        <Picker icon1="person" text="Friends" />
+      </ImageBackground>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginTop: 15,
+    borderRadius: 12,
   },
   backImgage: {
     flex: 1,

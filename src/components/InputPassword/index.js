@@ -48,9 +48,9 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 12,
     paddingHorizontal: 10,
-    borderColor: '#eaeaea',
+    marginTop: 10,
   },
   passInput: {
     flex: 1,

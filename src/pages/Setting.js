@@ -9,7 +9,8 @@ export default class Profil extends Component {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <Header label="Setting" icon="ellipsis-vertical-outline" size={25} />
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Account')}>
           <CardSetting
             icon1="person"
             text="Account"
@@ -35,6 +36,8 @@ export default class Profil extends Component {
 const styles = StyleSheet.create({
   backImgage: {
     flex: 1,
+    flexDirection: 'column',
+    alignContent: 'flex-start',
   },
   card: {
     flexDirection: 'row',

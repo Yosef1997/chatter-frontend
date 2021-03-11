@@ -17,7 +17,7 @@ export default class Profile extends Component {
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <ScrollView>
           <Header label="Chatter" icon="ellipsis-vertical-outline" size={25} />
-          <Search Icon="search1" />
+          <Search Icon="search1" size={15} container={styles.container} />
           <TouchableOpacity>
             <CardChat
               source={ProfileImg}
@@ -60,5 +60,14 @@ const styles = StyleSheet.create({
     height: 50,
     width: 50,
     borderRadius: 50,
+  },
+  container: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: 10,
+    marginTop: 15,
+    marginBottom: 10,
+    borderRadius: 12,
   },
 });
