@@ -17,8 +17,15 @@ export default class Profile extends Component {
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <ScrollView>
           <Header label="Chatter" icon="ellipsis-vertical-outline" size={25} />
-          <Search Icon="search1" size={15} container={styles.container} />
-          <TouchableOpacity>
+          <Search
+            Icon="search1"
+            size={15}
+            container={styles.container}
+            inputStyle={styles.input}
+            iconStyle={styles.icon}
+          />
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Message')}>
             <CardChat
               source={ProfileImg}
               label="Yosef"
@@ -47,6 +54,9 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
+  input: {
+    flex: 1,
+  },
   card: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -69,5 +79,8 @@ const styles = StyleSheet.create({
     marginTop: 15,
     marginBottom: 10,
     borderRadius: 12,
+  },
+  icon: {
+    marginLeft: 15,
   },
 });

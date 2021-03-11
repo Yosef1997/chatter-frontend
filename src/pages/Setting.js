@@ -10,19 +10,20 @@ export default class Profil extends Component {
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <Header label="Setting" icon="ellipsis-vertical-outline" size={25} />
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Account')}>
+          onPress={() => this.props.navigation.navigate('Profil')}>
           <CardSetting
             icon1="person"
-            text="Account"
+            text="Profile"
             size={20}
             card={styles.card}
             textStyle={styles.textStyle}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Account')}>
           <CardSetting
             icon1="shield"
-            text="Privacy"
+            text="Account"
             size={20}
             card={styles.card}
             textStyle={styles.textStyle}

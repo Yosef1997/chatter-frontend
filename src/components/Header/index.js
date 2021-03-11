@@ -11,7 +11,14 @@ export default class index extends Component {
           <Icon
             name={this.props.icon}
             size={this.props.size}
-            style={styles.icon}
+            style={this.props.icon1}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <Icon
+            name={this.props.icon2}
+            size={this.props.size2}
+            style={this.props.icon2}
           />
         </TouchableOpacity>
       </View>

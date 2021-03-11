@@ -1,58 +1,60 @@
 import React, {Component} from 'react';
 import {ImageBackground, TouchableOpacity, StyleSheet} from 'react-native';
-import Search from '../components/InputCustom';
-import CardProfile from '../components/CardCustom';
 import BackImg from '../assets/background.jpg';
-import Picker from '../components/Picker';
+import Header from '../components/Header';
+import SearchBar from '../components/InputCustom';
 import ProfileImg from '../assets/F9.jpg';
+import CardChat from '../components/CardCustom';
 
-export default class Home extends Component {
+export default class Search extends Component {
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
-        <CardProfile
-          source={ProfileImg}
-          label="Yosef"
-          message="hello"
-          icon2="settings-outline"
-          size={25}
-          style={styles.card}
-          image={styles.cardImg}
-          onPress={() => this.props.navigation.navigate('Profil')}
+        <Header label="Search" />
+        <SearchBar
+          Icon="search1"
+          size={15}
+          container={styles.container}
+          inputStyle={styles.input}
+          iconStyle={styles.icon}
         />
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Search')}>
-          <Search
-            Icon="search1"
-            size={15}
-            container={styles.container}
-            iconStyle={styles.icon}
+          onPress={() => this.props.navigation.navigate('Message')}>
+          <CardChat
+            source={ProfileImg}
+            label="Yosef"
+            message="hello"
+            style={styles.card}
+            image={styles.cardImg}
           />
         </TouchableOpacity>
-        <Picker icon1="persons" text="Groups" />
-        <Picker icon1="person" text="Friends" />
       </ImageBackground>
     );
   }
 }
-
 const styles = StyleSheet.create({
+  backImgage: {
+    flex: 1,
+  },
+  input: {
+    flex: 1,
+  },
   container: {
     backgroundColor: 'white',
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: 10,
     marginTop: 15,
+    marginBottom: 10,
     borderRadius: 12,
-  },
-  backImgage: {
-    flex: 1,
-    resizeMode: 'cover',
   },
   card: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    marginHorizontal: 10,
+    marginVertical: 5,
+    borderRadius: 12,
     backgroundColor: 'white',
   },
   cardImg: {

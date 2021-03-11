@@ -15,7 +15,7 @@ export default class index extends Component {
           <Text style={styles.label}>{this.props.label}</Text>
           <Text style={styles.message}>{this.props.message}</Text>
         </View>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={this.props.onPress}>
           <Icon name={this.props.icon2} size={this.props.size} />
         </TouchableOpacity>
       </View>

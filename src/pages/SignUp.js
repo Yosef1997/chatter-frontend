@@ -24,11 +24,11 @@ export default class SignUp extends Component {
         </View>
         <View style={styles.bg2}>
           <Text style={styles.text}>Name</Text>
-          <InputCustom container={styles.container} />
+          <InputCustom container={styles.container} inputStyle={styles.input} />
         </View>
         <View style={styles.bg2}>
           <Text style={styles.text}>Email</Text>
-          <InputCustom container={styles.container} />
+          <InputCustom container={styles.container} inputStyle={styles.input} />
         </View>
         <View style={styles.bg2}>
           <Text style={styles.text}>Password</Text>
@@ -55,6 +55,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginVertical: 10,
     alignItems: 'center',
+  },
+  input: {
+    flex: 1,
   },
   backImgage: {
     flex: 1,
