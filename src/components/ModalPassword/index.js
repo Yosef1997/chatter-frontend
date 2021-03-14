@@ -34,7 +34,6 @@ export default class index extends Component {
           }}
           style={this.props.modal}>
           <Text style={styles.label}>{this.props.label}</Text>
-          <Text style={styles.input}>{this.state.inputText}</Text>
         </TouchableOpacity>
       </View>
     );

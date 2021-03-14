@@ -1,18 +1,23 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Modal from 'react-native-dialog-input';
+import {connect} from 'react-redux';
+import {updateUser} from '../Redux/Action/auth';
 
-export default class index extends Component {
+class index extends Component {
   state = {
     isDialogVisible: false,
-    inputText: this.props.inputText,
+    phone: this.props.inputText,
   };
-  showDialog(isShow) {
+  showDialog = (isShow) => {
     this.setState({isDialogVisible: isShow});
-  }
-  sendInput(inputText) {
-    this.setState({inputText: inputText});
-  }
+  };
+  sendInput = async (inputText) => {
+    this.setState({phone: inputText});
+    const {phone} = this.state;
+    await updateUser(this.props.auth.user.id, phone);
+    console.log(this.props.auth.user.id, phone);
+  };
   render() {
     return (
       <View>
@@ -52,3 +57,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {updateUser};
+
+export default connect(mapStateToProps, mapDispatchToProps)(index);

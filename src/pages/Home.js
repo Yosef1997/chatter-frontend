@@ -5,15 +5,16 @@ import CardProfile from '../components/CardCustom';
 import BackImg from '../assets/background.jpg';
 import Picker from '../components/Picker';
 import ProfileImg from '../assets/F9.jpg';
+import {connect} from 'react-redux';
 
-export default class Home extends Component {
+class Home extends Component {
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <CardProfile
           source={ProfileImg}
-          label="Yosef"
-          message="hello"
+          label={this.props.auth.user.name}
+          message={this.props.auth.user.status}
           icon2="settings-outline"
           size={25}
           style={styles.card}
@@ -64,3 +65,9 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Home);

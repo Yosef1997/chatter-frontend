@@ -5,43 +5,74 @@ import {
   ImageBackground,
   Image,
   StyleSheet,
+  ScrollView,
   TouchableOpacity,
 } from 'react-native';
 import BackImg from '../assets/background.jpg';
 import Logo from '../assets/chatter.png';
 import InputCustom from '../components/InputCustom';
 import InputPassword from '../components/InputPassword';
+import {connect} from 'react-redux';
+import {signup} from '../components/Redux/Action/auth';
 
-export default class SignUp extends Component {
+class SignUp extends Component {
+  state = {
+    name: '',
+    email: '',
+    password: '',
+  };
+  doSignUp = async () => {
+    const {name, email, password} = this.state;
+    console.log(name, email, password);
+    await this.props.signup(name, email, password);
+    if (this.props.auth.message !== null) {
+      this.props.navigation.navigate('SignIn');
+    }
+    console.log(this.state);
+  };
+
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
-        <View style={styles.bg1}>
-          <Image source={Logo} style={styles.logo} />
-        </View>
-        <View style={styles.bg4}>
-          <Text style={styles.title}>Sign Up</Text>
-        </View>
-        <View style={styles.bg2}>
-          <Text style={styles.text}>Name</Text>
-          <InputCustom container={styles.container} inputStyle={styles.input} />
-        </View>
-        <View style={styles.bg2}>
-          <Text style={styles.text}>Email</Text>
-          <InputCustom container={styles.container} inputStyle={styles.input} />
-        </View>
-        <View style={styles.bg2}>
-          <Text style={styles.text}>Password</Text>
-          <InputPassword container={styles.container} />
-        </View>
-        <TouchableOpacity style={styles.bg3}>
-          <Text style={styles.btnfont}>Join the chatter</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('SignIn')}
-          style={styles.bg5}>
-          <Text style={styles.toLogin}>Sign In</Text>
-        </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.bg1}>
+            <Image source={Logo} style={styles.logo} />
+          </View>
+          <View style={styles.bg4}>
+            <Text style={styles.title}>Sign Up</Text>
+          </View>
+          <View style={styles.bg2}>
+            <Text style={styles.text}>Name</Text>
+            <InputCustom
+              onChangeText={(name) => this.setState({name})}
+              container={styles.container}
+              inputStyle={styles.input}
+            />
+          </View>
+          <View style={styles.bg2}>
+            <Text style={styles.text}>Email</Text>
+            <InputCustom
+              onChangeText={(email) => this.setState({email})}
+              container={styles.container}
+              inputStyle={styles.input}
+            />
+          </View>
+          <View style={styles.bg2}>
+            <Text style={styles.text}>Password</Text>
+            <InputPassword
+              onChangeText={(password) => this.setState({password})}
+              container={styles.container}
+            />
+          </View>
+          <TouchableOpacity onPress={this.doSignUp} style={styles.bg3}>
+            <Text style={styles.btnfont}>Join the chatter</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('SignIn')}
+            style={styles.bg5}>
+            <Text style={styles.toLogin}>Sign In</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </ImageBackground>
     );
   }
@@ -117,3 +148,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+const mapDispatchToProps = {signup};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);

@@ -8,8 +8,14 @@ import {
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import Modal from '../components/ModalCustom';
+import ModalPassword from '../components/ModalPassword';
+import {connect} from 'react-redux';
+import {signout} from '../components/Redux/Action/auth';
 
-export default class Account extends Component {
+class Account extends Component {
+  doLogout = () => {
+    this.props.signout();
+  };
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
@@ -17,16 +23,17 @@ export default class Account extends Component {
         <Modal
           label="Email"
           message="Write your email"
+          // inputText={this.props.auth.user.email}
           modal={styles.btn}
           textInputProps={{keyboardType: 'email-address'}}
         />
-        <Modal
+        <ModalPassword
           label="Password"
           message="Write your password"
           modal={styles.btn}
           textInputProps={{secureTextEntry: true}}
         />
-        <TouchableOpacity style={styles.btn}>
+        <TouchableOpacity onPress={this.doLogout} style={styles.btn}>
           <Text style={styles.btnfnt}>Sign Out</Text>
         </TouchableOpacity>
       </ImageBackground>
@@ -50,3 +57,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {signout};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account);

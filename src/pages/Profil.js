@@ -10,8 +10,10 @@ import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import ProfilImg from '../assets/F9.jpg';
 import Modal from '../components/ModalCustom';
+import ModalPhone from '../components/ModalPhone';
+import {connect} from 'react-redux';
 
-export default class Profil extends Component {
+class Profil extends Component {
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
@@ -21,17 +23,29 @@ export default class Profil extends Component {
             <Image source={ProfilImg} style={styles.cardImg} />
           </TouchableOpacity>
         </View>
-        <Modal label="Name" message="Write your name" modal={styles.btn} />
-        <Modal label="Status" message="Write your status" modal={styles.btn} />
         <Modal
+          label="Name"
+          message="Write your name"
+          inputText={this.props.auth.user.name}
+          modal={styles.btn}
+        />
+        <Modal
+          label="Status"
+          message="Write your status"
+          inputText={this.props.auth.user.status}
+          modal={styles.btn}
+        />
+        <ModalPhone
           label="Phone number"
           message="Write your Phone number"
           modal={styles.btn}
+          inputText={this.props.auth.user.phone}
           textInputProps={{keyboardType: 'phone-pad'}}
         />
         <Modal
           label="User ID"
           message="Write your User ID"
+          inputText={this.props.auth.user.userID}
           modal={styles.btn}
         />
       </ImageBackground>
@@ -65,3 +79,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps)(Profil);
