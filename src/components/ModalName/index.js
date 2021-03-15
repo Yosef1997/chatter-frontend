@@ -7,19 +7,19 @@ import {updateUser} from '../Redux/Action/auth';
 class index extends Component {
   state = {
     isDialogVisible: false,
-    phone: '',
-    inputPhone: this.props.inputText,
+    name: '',
+    inputName: this.props.inputText,
   };
   showDialog(isShow) {
     this.setState({isDialogVisible: isShow});
   }
   sendInput(inputText) {
-    this.setState({phone: inputText, inputPhone: inputText});
-    const {phone} = this.state;
+    this.setState({name: inputText, inputName: inputText});
+    const {name} = this.state;
     const {id} = this.props.auth.user;
     const {token} = this.props.auth;
     const data = new FormData();
-    data.append('phone', phone);
+    data.append('name', name);
     this.props.updateUser(token, id, data);
   }
   render() {
@@ -44,7 +44,7 @@ class index extends Component {
           }}
           style={this.props.modal}>
           <Text style={styles.label}>{this.props.label}</Text>
-          <Text style={styles.input}>{this.state.inputPhone}</Text>
+          <Text style={styles.input}>{this.state.inputName}</Text>
         </TouchableOpacity>
       </View>
     );

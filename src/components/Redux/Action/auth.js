@@ -57,38 +57,24 @@ export const signin = (email, password) => {
   };
 };
 
-export const updateUser = (id, name, phone, status, userID, picture) => {
+export const updateUser = (token, id, data) => {
   return async (dispatch) => {
-    const params = new URLSearchParams();
-    params.append('name', name);
-    params.append('phone', phone);
-    params.append('status', status);
-    params.append('userID', userID);
-    params.append('picture', picture);
-    if (
-      name !== null ||
-      phone !== null ||
-      status !== null ||
-      userID !== null ||
-      picture !== null
-    ) {
-      try {
-        dispatch({
-          type: 'SET_AUTH_MESSAGE',
-          payload: '',
-        });
-        const results = await http().patch(`/user/${id}`, params);
-        dispatch({
-          type: 'UPDATE_USER',
-          payload: results.data.results,
-        });
-      } catch (err) {
-        const {message} = err.response.data;
-        dispatch({
-          type: 'SET_AUTH_MESSAGE',
-          payload: message,
-        });
-      }
+    try {
+      dispatch({
+        type: 'SET_AUTH_MESSAGE',
+        payload: '',
+      });
+      const results = await http(token).patch(`/user/${id}`, data);
+      dispatch({
+        type: 'UPDATE_USER',
+        payload: results.data.results,
+      });
+    } catch (err) {
+      const {message} = err.response.data;
+      dispatch({
+        type: 'SET_AUTH_MESSAGE',
+        payload: message,
+      });
     }
   };
 };

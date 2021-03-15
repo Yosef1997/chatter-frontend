@@ -1,17 +1,26 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Modal from 'react-native-dialog-input';
+import {connect} from 'react-redux';
+import {updateUser} from '../Redux/Action/auth';
 
-export default class index extends Component {
+class index extends Component {
   state = {
     isDialogVisible: false,
-    inputText: this.props.inputText,
+    status: '',
+    inputStatus: this.props.inputText,
   };
   showDialog(isShow) {
     this.setState({isDialogVisible: isShow});
   }
   sendInput(inputText) {
-    this.setState({inputText: inputText});
+    this.setState({status: inputText, inputStatus: inputText});
+    const {status} = this.state;
+    const {id} = this.props.auth.user;
+    const {token} = this.props.auth;
+    const data = new FormData();
+    data.append('status', status);
+    this.props.updateUser(token, id, data);
   }
   render() {
     return (
@@ -23,6 +32,7 @@ export default class index extends Component {
           textInputProps={this.props.textInputProps}
           submitInput={(inputText) => {
             this.sendInput(inputText);
+            this.showDialog(false);
           }}
           closeDialog={() => {
             this.showDialog(false);
@@ -34,7 +44,7 @@ export default class index extends Component {
           }}
           style={this.props.modal}>
           <Text style={styles.label}>{this.props.label}</Text>
-          <Text style={styles.input}>{this.state.inputText}</Text>
+          <Text style={styles.input}>{this.state.inputStatus}</Text>
         </TouchableOpacity>
       </View>
     );
@@ -52,3 +62,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {updateUser};
+export default connect(mapStateToProps, mapDispatchToProps)(index);

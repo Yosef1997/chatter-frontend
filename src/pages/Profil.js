@@ -9,7 +9,9 @@ import {
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import ProfilImg from '../assets/F9.jpg';
-import Modal from '../components/ModalCustom';
+import ModalUserID from '../components/ModalUserID';
+import ModalName from '../components/ModalName';
+import ModalStatus from '../components/ModalStatus';
 import ModalPhone from '../components/ModalPhone';
 import {connect} from 'react-redux';
 
@@ -23,13 +25,13 @@ class Profil extends Component {
             <Image source={ProfilImg} style={styles.cardImg} />
           </TouchableOpacity>
         </View>
-        <Modal
+        <ModalName
           label="Name"
           message="Write your name"
           inputText={this.props.auth.user.name}
           modal={styles.btn}
         />
-        <Modal
+        <ModalStatus
           label="Status"
           message="Write your status"
           inputText={this.props.auth.user.status}
@@ -42,7 +44,7 @@ class Profil extends Component {
           inputText={this.props.auth.user.phone}
           textInputProps={{keyboardType: 'phone-pad'}}
         />
-        <Modal
+        <ModalUserID
           label="User ID"
           message="Write your User ID"
           inputText={this.props.auth.user.userID}

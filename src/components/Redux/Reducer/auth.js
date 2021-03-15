@@ -20,7 +20,7 @@ const authReducer = (state = initialState, action) => {
         user: action.user,
       };
     }
-    case 'DETAIL_USER': {
+    case 'UPDATE_USER': {
       return {
         ...state,
         detailUser: action.payload,

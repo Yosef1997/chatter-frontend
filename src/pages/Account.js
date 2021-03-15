@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
-import Modal from '../components/ModalCustom';
+import ModalEmail from '../components/ModalEmail';
 import ModalPassword from '../components/ModalPassword';
 import {connect} from 'react-redux';
 import {signout} from '../components/Redux/Action/auth';
@@ -20,10 +20,10 @@ class Account extends Component {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <Header label="Account" />
-        <Modal
+        <ModalEmail
           label="Email"
           message="Write your email"
-          // inputText={this.props.auth.user.email}
+          inputText={this.props.auth.user.email}
           modal={styles.btn}
           textInputProps={{keyboardType: 'email-address'}}
         />
