@@ -79,6 +79,28 @@ export const updateUser = (token, id, data) => {
   };
 };
 
+export const detailUser = (id) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'SET_AUTH_MESSAGE',
+        payload: '',
+      });
+      const results = await http().get(`/user/${id}`);
+      dispatch({
+        type: 'DETAIL_USER',
+        payload: results.data.results,
+      });
+    } catch (err) {
+      const {message} = err.response.data;
+      dispatch({
+        type: 'SET_AUTH_MESSAGE',
+        payload: message,
+      });
+    }
+  };
+};
+
 export const signout = () => ({
   type: 'SIGNOUT',
 });

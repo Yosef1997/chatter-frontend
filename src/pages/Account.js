@@ -24,8 +24,7 @@ class Account extends Component {
           label="Email"
           message="Write your email"
           inputText={this.props.auth.user.email}
-          modal={styles.btn}
-          textInputProps={{keyboardType: 'email-address'}}
+          keyboardType="email-address"
         />
         <ModalPassword
           label="Password"

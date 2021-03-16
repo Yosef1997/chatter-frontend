@@ -14,8 +14,13 @@ import ModalName from '../components/ModalName';
 import ModalStatus from '../components/ModalStatus';
 import ModalPhone from '../components/ModalPhone';
 import {connect} from 'react-redux';
+import {detailUser} from '../components/Redux/Action/auth';
 
 class Profil extends Component {
+  async componentDidMount() {
+    const {id} = this.props.auth.user;
+    await this.props.detailUser(id);
+  }
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
@@ -28,27 +33,23 @@ class Profil extends Component {
         <ModalName
           label="Name"
           message="Write your name"
-          inputText={this.props.auth.user.name}
-          modal={styles.btn}
+          inputText={this.props.auth.detailUser.name}
         />
         <ModalStatus
           label="Status"
           message="Write your status"
-          inputText={this.props.auth.user.status}
-          modal={styles.btn}
+          inputText={this.props.auth.detailUser.status}
         />
         <ModalPhone
           label="Phone number"
           message="Write your Phone number"
-          modal={styles.btn}
-          inputText={this.props.auth.user.phone}
-          textInputProps={{keyboardType: 'phone-pad'}}
+          inputText={this.props.auth.detailUser.phone}
+          keyboardType="numeric"
         />
         <ModalUserID
           label="User ID"
           message="Write your User ID"
-          inputText={this.props.auth.user.userID}
-          modal={styles.btn}
+          inputText={this.props.auth.detailUser.userID}
         />
       </ImageBackground>
     );
@@ -85,5 +86,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-
-export default connect(mapStateToProps)(Profil);
+const mapDispatchToProps = {detailUser};
+export default connect(mapStateToProps, mapDispatchToProps)(Profil);
