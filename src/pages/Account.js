@@ -10,9 +10,12 @@ import Header from '../components/Header';
 import ModalEmail from '../components/ModalEmail';
 import ModalPassword from '../components/ModalPassword';
 import {connect} from 'react-redux';
-import {signout} from '../components/Redux/Action/auth';
+import {signout, detailUser} from '../components/Redux/Action/auth';
 
 class Account extends Component {
+  async componentDidMount() {
+    await this.props.detailUser(this.props.auth.user.id);
+  }
   doLogout = () => {
     this.props.signout();
   };
@@ -23,7 +26,7 @@ class Account extends Component {
         <ModalEmail
           label="Email"
           message="Write your email"
-          inputText={this.props.auth.user.email}
+          inputText={this.props.auth.detailUser.email}
           keyboardType="email-address"
         />
         <ModalPassword
@@ -60,6 +63,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {signout};
+const mapDispatchToProps = {signout, detailUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account);

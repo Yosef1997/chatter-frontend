@@ -22,10 +22,10 @@ class SignIn extends Component {
   doLogin = async () => {
     const {email, password} = this.state;
     await this.props.signin(email, password);
+    await this.props.detailUser(this.props.auth.user.id);
     if (this.props.auth.token !== null) {
       this.props.navigation.navigate('BottomTab');
     }
-    console.log(email, password);
   };
 
   render() {

@@ -6,15 +6,19 @@ import BackImg from '../assets/background.jpg';
 import Picker from '../components/Picker';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
+import {detailUser} from '../components/Redux/Action/auth';
 
 class Home extends Component {
+  // async componentDidMount() {
+  //   this.props.detailUser(this.props.auth.user.id);
+  // }
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <CardProfile
           source={ProfileImg}
-          label={this.props.auth.user.name}
-          message={this.props.auth.user.status}
+          label={this.props.auth.detailUser.name}
+          message={this.props.auth.detailUser.status}
           icon2="settings-outline"
           size={25}
           style={styles.card}
@@ -69,5 +73,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {detailUser};
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
