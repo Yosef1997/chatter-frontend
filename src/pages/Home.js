@@ -7,16 +7,19 @@ import Picker from '../components/Picker';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
 import {detailUser} from '../components/Redux/Action/auth';
+import {detailChatUser} from '../components/Redux/Action/user';
+import {REACT_APP_API_URL as API_URL} from '@env';
 
 class Home extends Component {
-  // async componentDidMount() {
-  //   this.props.detailUser(this.props.auth.user.id);
-  // }
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <CardProfile
-          source={ProfileImg}
+          source={{
+            uri: API_URL.concat(
+              `/upload/profile/${this.props.auth.detailUser.picture}`,
+            ),
+          }}
           label={this.props.auth.detailUser.name}
           message={this.props.auth.detailUser.status}
           icon2="settings-outline"
@@ -34,8 +37,16 @@ class Home extends Component {
             iconStyle={styles.icon}
           />
         </TouchableOpacity>
-        <Picker icon1="persons" text="Groups" />
-        <Picker icon1="person" text="Friends" />
+        <Picker
+          icon1="persons"
+          text="Groups"
+          navigate={() => this.props.navigation.navigate('Message')}
+        />
+        <Picker
+          icon1="person"
+          text="Friends"
+          navigate={() => this.props.navigation.navigate('Message')}
+        />
       </ImageBackground>
     );
   }
@@ -73,5 +84,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {detailUser};
+const mapDispatchToProps = {detailUser, detailChatUser};
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

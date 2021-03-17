@@ -1,12 +1,36 @@
 import React, {Component} from 'react';
-import {ImageBackground, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  ImageBackground,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+} from 'react-native';
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import SearchBar from '../components/InputCustom';
-import ProfileImg from '../assets/F9.jpg';
+// import ProfileImg from '../assets/F9.jpg';
 import CardChat from '../components/CardCustom';
+import {connect} from 'react-redux';
+import {allUser} from '../components/Redux/Action/auth';
+import {detailChatUser} from '../components/Redux/Action/user';
+import {REACT_APP_API_URL as API_URL} from '@env';
 
-export default class Search extends Component {
+class Search extends Component {
+  state = {
+    search: '',
+  };
+  async componentDidMount() {
+    await this.props.allUser(this.props.auth.token);
+  }
+  doSearch = (search) => {
+    this.setState({search: search}, async () => {
+      await this.props.allUser(this.props.auth.token, this.state.search);
+    });
+  };
+  doChat = async (id) => {
+    await this.props.detailChatUser(id);
+    this.props.navigation.navigate('Message');
+  };
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
@@ -17,17 +41,28 @@ export default class Search extends Component {
           container={styles.container}
           inputStyle={styles.input}
           iconStyle={styles.icon}
+          onChangeText={(search) => this.doSearch(search)}
         />
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Message')}>
-          <CardChat
-            source={ProfileImg}
-            label="Yosef"
-            message="hello"
-            style={styles.card}
-            image={styles.cardImg}
-          />
-        </TouchableOpacity>
+        <FlatList
+          data={this.props.auth.allUser}
+          keyExtractor={(item, index) => String(item.id)}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity onPress={() => this.doChat(item.id)}>
+                <CardChat
+                  source={{
+                    uri: API_URL.concat(`/upload/profile/${item.picture}`),
+                  }}
+                  label={item.name}
+                  message={item.status}
+                  style={styles.card}
+                  // source={ProfileImg}
+                  image={styles.cardImg}
+                />
+              </TouchableOpacity>
+            );
+          }}
+        />
       </ImageBackground>
     );
   }
@@ -66,3 +101,10 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {allUser, detailChatUser};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

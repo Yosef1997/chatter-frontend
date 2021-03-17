@@ -41,10 +41,12 @@ class index extends Component {
             type: response.type,
             name: response.fileName,
           };
+          const data = new FormData();
+          data.append('picture', dataImage);
           await this.props.updateUser(
             this.props.auth.token,
             this.props.auth.user.id,
-            {file: dataImage},
+            data,
           );
           Alert(this.props.auth.message, 'success');
         }
@@ -66,10 +68,12 @@ class index extends Component {
           type: response.type,
           name: response.fileName,
         };
+        const data = new FormData();
+        data.append('picture', dataImage);
         await this.props.updateUser(
           this.props.auth.token,
           this.props.auth.user.id,
-          {file: dataImage},
+          data,
         );
         Alert(this.props.auth.message, 'success');
       }
@@ -140,7 +144,7 @@ const styles = StyleSheet.create({
     width: 150,
     borderRadius: 150,
     opacity: 1,
-    resizeMode: 'contain',
+    resizeMode: 'cover',
   },
   centeredView: {
     flex: 1,

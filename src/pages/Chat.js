@@ -10,8 +10,16 @@ import CardChat from '../components/CardCustom';
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import ProfileImg from '../assets/F9.jpg';
+import {connect} from 'react-redux';
+import {allChatUser} from '../components/Redux/Action/user';
 
-export default class Profile extends Component {
+class Chat extends Component {
+  async componentDidMount() {
+    await this.props.allChatUser(
+      this.props.auth.token,
+      this.props.auth.user.id,
+    );
+  }
   render() {
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
@@ -84,3 +92,10 @@ const styles = StyleSheet.create({
     marginLeft: 15,
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+  user: state.user,
+});
+const mapDispatchToProps = {allChatUser};
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

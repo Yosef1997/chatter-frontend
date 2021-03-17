@@ -3,6 +3,8 @@ const initialState = {
   updateUser: null,
   detailUser: null,
   user: null,
+  allUser: null,
+  page: null,
   message: '',
   errorMsg: '',
 };
@@ -32,6 +34,13 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         detailUser: action.payload,
+      };
+    }
+    case 'USER': {
+      return {
+        ...state,
+        allUser: action.payload,
+        page: action.pageInfo,
       };
     }
     case 'SET_AUTH_MESSAGE': {

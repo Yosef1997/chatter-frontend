@@ -1,12 +1,19 @@
 import React, {Component} from 'react';
-import {Text, Image, TouchableOpacity, View, StyleSheet} from 'react-native';
+import {
+  Text,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
-import ProfileImg from '../../assets/F9.jpg';
+import {allUser} from '../Redux/Action/auth';
+import {connect} from 'react-redux';
+import {detailChatUser} from '../Redux/Action/user';
+import {REACT_APP_API_URL as API_URL} from '@env';
 
-// import {connect} from 'react-redux';
-// import {signout} from '../Redux/Action/auth';
-
-export default class index extends Component {
+class index extends Component {
   state = {
     navbartoggle: false,
   };
@@ -15,12 +22,10 @@ export default class index extends Component {
       navbartoggle: !this.state.navbartoggle,
     });
   };
-  // goToProfil = () => {
-  //   this.props.navigation.navigate('Profil');
-  // };
-  // doLogout = () => {
-  //   this.props.signout();
-  // };
+  doChat = async (id) => {
+    await this.props.detailChatUser(id);
+    this.props.navigation.navigate('Message');
+  };
   render() {
     return (
       <View>
@@ -32,29 +37,28 @@ export default class index extends Component {
           </TouchableOpacity>
         </View>
         {this.state.navbartoggle && (
-          <React.Fragment>
-            <View style={styles.menu}>
-              <Image source={ProfileImg} style={styles.cardImg} />
-              <View style={styles.cardText}>
-                <Text style={styles.label}>Yosef</Text>
-                <Text style={styles.message}>Happy</Text>
-              </View>
-            </View>
-            <View style={styles.menu}>
-              <Image source={ProfileImg} style={styles.cardImg} />
-              <View style={styles.cardText}>
-                <Text style={styles.label}>Yosef</Text>
-                <Text style={styles.message}>Happy</Text>
-              </View>
-            </View>
-            <View style={styles.menu}>
-              <Image source={ProfileImg} style={styles.cardImg} />
-              <View style={styles.cardText}>
-                <Text style={styles.label}>Yosef</Text>
-                <Text style={styles.message}>Happy</Text>
-              </View>
-            </View>
-          </React.Fragment>
+          <FlatList
+            data={this.props.auth.allUser}
+            keyExtractor={(item, index) => String(item.id)}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity onPress={this.props.navigate}>
+                  <View style={styles.menu}>
+                    <Image
+                      source={{
+                        uri: API_URL.concat(`/upload/profile/${item.picture}`),
+                      }}
+                      style={styles.cardImg}
+                    />
+                    <View style={styles.cardText}>
+                      <Text style={styles.label}>{item.name}</Text>
+                      <Text style={styles.message}>{item.status}</Text>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
         )}
       </View>
     );
@@ -102,3 +106,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {allUser, detailChatUser};
+
+export default connect(mapStateToProps, mapDispatchToProps)(index);

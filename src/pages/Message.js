@@ -9,13 +9,14 @@ import {
 import Header from '../components/Header';
 import BackImg from '../assets/background.jpg';
 import InputMessage from '../components/InputCustom';
+import {connect} from 'react-redux';
 
-export default class Message extends Component {
+class Message extends Component {
   render() {
     return (
       <React.Fragment>
         <Header
-          label="Yosef"
+          label={this.props.user.chatUser.name}
           icon="call-outline"
           size={25}
           icon1={styles.icon}
@@ -71,3 +72,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#eaeaea',
   },
 });
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(Message);
