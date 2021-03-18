@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
-// import ProfilImg from '../assets/F9.jpg';
 import ModalCamera from '../components/ModalCamera';
 import ModalUserID from '../components/ModalUserID';
 import ModalName from '../components/ModalName';
@@ -20,54 +19,15 @@ import {connect} from 'react-redux';
 import {detailUser} from '../components/Redux/Action/auth';
 
 class Profil extends Component {
-  // state = {
-  //   modalVisible: false,
-  // };
   async componentDidMount() {
     const {id} = this.props.auth.user;
     await this.props.detailUser(id);
   }
 
-  // setModalVisible = (visible) => {
-  //   this.setState({modalVisible: visible});
-  // };
   render() {
-    // const {modalVisible} = this.state;
     return (
       <ImageBackground source={BackImg} style={styles.backImgage}>
         <Header label="Profile" />
-        {/* <View style={styles.bg1}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              this.setModalVisible(!modalVisible);
-            }}>
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <TouchableOpacity
-                  style={[styles.button, styles.buttonOpen]}
-                  onPress={() => this.setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>Open camera</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, styles.buttonOpen]}
-                  onPress={() => this.setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>Open gallery</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={[styles.button, styles.buttonClose]}
-                  onPress={() => this.setModalVisible(!modalVisible)}>
-                  <Text style={styles.textStyle}>Delete photo</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </Modal>
-          <TouchableOpacity onPress={() => this.setModalVisible(true)}>
-            <Image source={ProfilImg} style={styles.cardImg} />
-          </TouchableOpacity>
-        </View> */}
         <ModalCamera />
         <ModalName
           label="Name"
