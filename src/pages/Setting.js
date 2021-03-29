@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import Header from '../components/Header';
 import BackImg from '../assets/background.jpg';
 import CardSetting from '../components/CardCustom';
@@ -7,7 +7,7 @@ import CardSetting from '../components/CardCustom';
 export default class Profil extends Component {
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <Header label="Setting" icon="ellipsis-vertical-outline" size={25} />
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Profil')}>
@@ -29,16 +29,14 @@ export default class Profil extends Component {
             textStyle={styles.textStyle}
           />
         </TouchableOpacity>
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
   backImgage: {
-    flex: 1,
-    flexDirection: 'column',
-    alignContent: 'flex-start',
+    backgroundColor: '#d9ecf2',
   },
   card: {
     flexDirection: 'row',

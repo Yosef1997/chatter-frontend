@@ -2,12 +2,12 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  ImageBackground,
+  ScrollView,
   Image,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import BackImg from '../assets/background.jpg';
+// import BackImg from '../assets/background.jpg';
 import Logo from '../assets/chatter.png';
 import InputCustom from '../components/InputCustom';
 import InputPassword from '../components/InputPassword';
@@ -30,7 +30,7 @@ class SignIn extends Component {
 
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <View style={styles.bg1}>
           <Image source={Logo} style={styles.logo} />
         </View>
@@ -55,7 +55,7 @@ class SignIn extends Component {
         <TouchableOpacity onPress={this.doLogin} style={styles.bg3}>
           <Text style={styles.btnfont}>Go chat</Text>
         </TouchableOpacity>
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }
@@ -73,13 +73,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backImgage: {
-    flex: 1,
-    resizeMode: 'cover',
-    flexDirection: 'column',
+    backgroundColor: '#d9ecf2',
   },
   bg1: {
     backgroundColor: 'white',
     paddingVertical: 10,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
   },
   bg2: {
     backgroundColor: 'white',

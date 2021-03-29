@@ -29,7 +29,7 @@ export default class index extends Component {
 const styles = StyleSheet.create({
   cardText: {
     flexDirection: 'row',
-    backgroundColor: 'white',
+    backgroundColor: '#D9ECF2',
     alignItems: 'center',
     paddingHorizontal: 10,
     paddingVertical: 10,

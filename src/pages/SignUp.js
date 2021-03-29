@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import {
   Text,
   View,
-  ImageBackground,
+  // ImageBackground,
   Image,
   StyleSheet,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import BackImg from '../assets/background.jpg';
+// import BackImg from '../assets/background.jpg';
 import Logo from '../assets/chatter.png';
 import InputCustom from '../components/InputCustom';
 import InputPassword from '../components/InputPassword';
@@ -33,47 +33,45 @@ class SignUp extends Component {
 
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
-        <ScrollView>
-          <View style={styles.bg1}>
-            <Image source={Logo} style={styles.logo} />
-          </View>
-          <View style={styles.bg4}>
-            <Text style={styles.title}>Sign Up</Text>
-          </View>
-          <View style={styles.bg2}>
-            <Text style={styles.text}>Name</Text>
-            <InputCustom
-              onChangeText={(name) => this.setState({name})}
-              container={styles.container}
-              inputStyle={styles.input}
-            />
-          </View>
-          <View style={styles.bg2}>
-            <Text style={styles.text}>Email</Text>
-            <InputCustom
-              onChangeText={(email) => this.setState({email})}
-              container={styles.container}
-              inputStyle={styles.input}
-            />
-          </View>
-          <View style={styles.bg2}>
-            <Text style={styles.text}>Password</Text>
-            <InputPassword
-              onChangeText={(password) => this.setState({password})}
-              container={styles.container}
-            />
-          </View>
-          <TouchableOpacity onPress={this.doSignUp} style={styles.bg3}>
-            <Text style={styles.btnfont}>Join the chatter</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('SignIn')}
-            style={styles.bg5}>
-            <Text style={styles.toLogin}>Sign In</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </ImageBackground>
+      <ScrollView style={styles.backImgage}>
+        <View style={styles.bg1}>
+          <Image source={Logo} style={styles.logo} />
+        </View>
+        <View style={styles.bg4}>
+          <Text style={styles.title}>Sign Up</Text>
+        </View>
+        <View style={styles.bg2}>
+          <Text style={styles.text}>Name</Text>
+          <InputCustom
+            onChangeText={(name) => this.setState({name})}
+            container={styles.container}
+            inputStyle={styles.input}
+          />
+        </View>
+        <View style={styles.bg2}>
+          <Text style={styles.text}>Email</Text>
+          <InputCustom
+            onChangeText={(email) => this.setState({email})}
+            container={styles.container}
+            inputStyle={styles.input}
+          />
+        </View>
+        <View style={styles.bg2}>
+          <Text style={styles.text}>Password</Text>
+          <InputPassword
+            onChangeText={(password) => this.setState({password})}
+            container={styles.container}
+          />
+        </View>
+        <TouchableOpacity onPress={this.doSignUp} style={styles.bg3}>
+          <Text style={styles.btnfont}>Join the chatter</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('SignIn')}
+          style={styles.bg5}>
+          <Text style={styles.toLogin}>Sign In</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
   }
 }
@@ -91,13 +89,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   backImgage: {
-    flex: 1,
-    resizeMode: 'cover',
-    flexDirection: 'column',
+    backgroundColor: '#d9ecf2',
   },
   bg1: {
     backgroundColor: 'white',
     paddingVertical: 10,
+    borderBottomRightRadius: 20,
+    borderBottomLeftRadius: 20,
   },
   bg2: {
     backgroundColor: 'white',
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   bg4: {
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     marginHorizontal: 10,
     borderRadius: 12,
     padding: 10,
