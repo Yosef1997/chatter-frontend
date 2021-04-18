@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {ImageBackground, TouchableOpacity, StyleSheet} from 'react-native';
+import {ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import Search from '../components/InputCustom';
 import CardProfile from '../components/CardCustom';
 import BackImg from '../assets/background.jpg';
@@ -13,7 +13,7 @@ import {REACT_APP_API_URL as API_URL} from '@env';
 class Home extends Component {
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <CardProfile
           source={{
             uri: API_URL.concat(
@@ -47,7 +47,7 @@ class Home extends Component {
           text="Friends"
           navigate={() => this.props.navigation.navigate('Message')}
         />
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }

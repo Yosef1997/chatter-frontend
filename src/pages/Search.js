@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  FlatList,
-} from 'react-native';
+import {ScrollView, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import SearchBar from '../components/InputCustom';
@@ -33,7 +28,7 @@ class Search extends Component {
   };
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <Header label="Search" />
         <SearchBar
           Icon="search1"
@@ -63,7 +58,7 @@ class Search extends Component {
             );
           }}
         />
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }

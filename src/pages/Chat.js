@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ImageBackground,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import Search from '../components/InputCustom';
 import CardChat from '../components/CardCustom';
 import BackImg from '../assets/background.jpg';
@@ -22,7 +17,7 @@ class Chat extends Component {
   }
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <ScrollView>
           <Header label="Chatter" icon="ellipsis-vertical-outline" size={25} />
           <Search
@@ -52,7 +47,7 @@ class Chat extends Component {
             />
           </TouchableOpacity>
         </ScrollView>
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }

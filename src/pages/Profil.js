@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {
-  ImageBackground,
+  ScrollView,
   // Modal,
   // Text,
   // TouchableOpacity,
@@ -26,7 +26,7 @@ class Profil extends Component {
 
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <Header label="Profile" />
         <ModalCamera />
         <ModalName
@@ -50,7 +50,7 @@ class Profil extends Component {
           message="Write your User ID"
           inputText={this.props.auth.detailUser.userID}
         />
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }

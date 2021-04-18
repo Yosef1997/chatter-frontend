@@ -1,10 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ImageBackground,
-  TouchableOpacity,
-  StyleSheet,
-  Text,
-} from 'react-native';
+import {ScrollView, TouchableOpacity, StyleSheet, Text} from 'react-native';
 import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import ModalEmail from '../components/ModalEmail';
@@ -21,7 +16,7 @@ class Account extends Component {
   };
   render() {
     return (
-      <ImageBackground source={BackImg} style={styles.backImgage}>
+      <ScrollView style={styles.backImgage}>
         <Header label="Account" />
         <ModalEmail
           label="Email"
@@ -38,7 +33,7 @@ class Account extends Component {
         <TouchableOpacity onPress={this.doLogout} style={styles.btn}>
           <Text style={styles.btnfnt}>Sign Out</Text>
         </TouchableOpacity>
-      </ImageBackground>
+      </ScrollView>
     );
   }
 }

@@ -1,11 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Text,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from '../components/Header';
 import BackImg from '../assets/background.jpg';
 import InputMessage from '../components/InputCustom';
@@ -23,7 +17,7 @@ class Message extends Component {
           size2={35}
           icon2="reorder-three-sharp"
         />
-        <ImageBackground source={BackImg} style={styles.backImgage}>
+        <ScrollView style={styles.backImgage}>
           <ScrollView>
             {[
               ...Array(1000).map((item) => {
@@ -31,7 +25,7 @@ class Message extends Component {
               }),
             ]}
           </ScrollView>
-        </ImageBackground>
+        </ScrollView>
         <InputMessage
           Icon="plus"
           Icon2="instagram"
