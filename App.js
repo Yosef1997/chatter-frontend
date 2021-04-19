@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import Router from './src/router/Router';
+import Router from './src/router/router';
 import persistStore from './src/components/Redux/store';
 import {PersistGate} from 'redux-persist/es/integration/react';
 import {Provider} from 'react-redux';

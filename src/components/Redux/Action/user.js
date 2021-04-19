@@ -1,43 +1,72 @@
 import http from '../../Helper/http';
 
-export const detailChatUser = (id) => {
+export const updateUser = (token, id, data) => {
   return async (dispatch) => {
     try {
       dispatch({
-        type: 'SET_AUTH_MESSAGE',
+        type: 'USER_MESSAGE',
         payload: '',
       });
-      const results = await http().get(`/user/${id}`);
+      const results = await http(token).patch(`/user/${id}`, data);
       dispatch({
-        type: 'DETAIL_CHAT_USER',
+        type: 'UPDATE_USER',
         payload: results.data.results,
       });
     } catch (err) {
       const {message} = err.response.data;
       dispatch({
-        type: 'SET_AUTH_MESSAGE',
+        type: 'USER_MESSAGE',
         payload: message,
       });
     }
   };
 };
 
-export const allChatUser = (token, id) => {
+export const user = (id) => {
   return async (dispatch) => {
     try {
       dispatch({
-        type: 'SET_AUTH_MESSAGE',
+        type: 'USER_MESSAGE',
         payload: '',
       });
-      const results = await http(token).get(`/chat/all/${id}`);
+      const results = await http().get(`/user/${id}`);
       dispatch({
-        type: 'ALLCHAT_USER',
+        type: 'DETAIL_USER',
         payload: results.data.results,
       });
     } catch (err) {
       const {message} = err.response.data;
       dispatch({
-        type: 'SET_AUTH_MESSAGE',
+        type: 'USER_MESSAGE',
+        payload: message,
+      });
+    }
+  };
+};
+
+export const allUser = (token, search, limit, page, sort, order) => {
+  return async (dispatch) => {
+    try {
+      dispatch({
+        type: 'USER_MESSAGE',
+        payload: '',
+      });
+      const response = await http(token).get(
+        `user?search=${search !== undefined ? search : ''}&limit=${
+          limit !== undefined ? limit : 4
+        }&page=${page !== undefined ? page : 1}&sort=${
+          sort !== undefined ? sort : 'id'
+        }&order=${order !== undefined ? order : 'ASC'}`,
+      );
+      dispatch({
+        type: 'USER',
+        payload: response.data.results,
+        pageInfo: response.data.pageInfo,
+      });
+    } catch (err) {
+      const {message} = err.response.data;
+      dispatch({
+        type: 'USER_MESSAGE',
         payload: message,
       });
     }

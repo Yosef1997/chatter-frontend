@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
 import Search from '../components/InputCustom';
 import CardProfile from '../components/CardCustom';
-import BackImg from '../assets/background.jpg';
 import Picker from '../components/Picker';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
@@ -14,20 +13,33 @@ class Home extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <CardProfile
-          source={{
-            uri: API_URL.concat(
-              `/upload/profile/${this.props.auth.detailUser.picture}`,
-            ),
-          }}
-          label={this.props.auth.detailUser.name}
-          message={this.props.auth.detailUser.status}
-          icon2="settings-outline"
-          size={25}
-          style={styles.card}
-          image={styles.cardImg}
-          onPress={() => this.props.navigation.navigate('Profil')}
-        />
+        {this.props.auth.detailUser.picture === null ? (
+          <CardProfile
+            source={ProfileImg}
+            label={this.props.auth.detailUser.name}
+            message={this.props.auth.detailUser.status}
+            icon2="settings-outline"
+            size={25}
+            style={styles.card}
+            image={styles.cardImg}
+            onPress={() => this.props.navigation.navigate('Profil')}
+          />
+        ) : (
+          <CardProfile
+            source={{
+              uri: API_URL.concat(
+                `/upload/profile/${this.props.auth.detailUser.picture}`,
+              ),
+            }}
+            label={this.props.auth.detailUser.name}
+            message={this.props.auth.detailUser.status}
+            icon2="settings-outline"
+            size={25}
+            style={styles.card}
+            image={styles.cardImg}
+            onPress={() => this.props.navigation.navigate('Profil')}
+          />
+        )}
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Search')}>
           <Search
