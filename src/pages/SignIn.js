@@ -3,14 +3,12 @@ import {
   Text,
   View,
   ScrollView,
-  Image,
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-// import BackImg from '../assets/background.jpg';
-import Logo from '../assets/chatter.png';
-import InputCustom from '../components/InputCustom';
-import InputPassword from '../components/InputPassword';
+// import Logo from '../assets/chatter.png';
+import Header from '../components/Header';
+import Button from '../components/Button';
 import {connect} from 'react-redux';
 import {signin, detailUser} from '../components/Redux/Action/auth';
 
@@ -20,40 +18,32 @@ class SignIn extends Component {
     password: '',
   };
   doLogin = async () => {
-    const {email, password} = this.state;
-    await this.props.signin(email, password);
-    await this.props.detailUser(this.props.auth.user.id);
-    if (this.props.auth.token !== null) {
-      this.props.navigation.navigate('BottomTab');
-    }
+    this.props.navigation.navigate('BottomTab');
+    // const {email, password} = this.state;
+    // await this.props.signin(email, password);
+    // await this.props.detailUser(this.props.auth.user.id);
+    // if (this.props.auth.token !== null) {
+    //   this.props.navigation.navigate('BottomTab');
+    // }
   };
 
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <View style={styles.bg1}>
-          <Image source={Logo} style={styles.logo} />
+        <Header back="chevron-back" size3={25} />
+        <Text style={styles.title}>Log in to Chatter</Text>
+        <Text style={styles.subTitle}>
+          Log in with your registered phonre number to get{'\n'}started
+        </Text>
+        <Text style={styles.subTitle}>
+          If you linked your account to Facebook, you can{'\n'}also log in that
+          way
+        </Text>
+        <View style={styles.btnForm}>
+          <Button onPress={this.doLogin}>Go chat</Button>
         </View>
-        <View style={styles.bg4}>
-          <Text style={styles.title}>Sign In</Text>
-        </View>
-        <View style={styles.bg2}>
-          <Text style={styles.text}>Email</Text>
-          <InputCustom
-            onChangeText={(email) => this.setState({email})}
-            container={styles.container}
-            inputStyle={styles.input}
-          />
-        </View>
-        <View style={styles.bg2}>
-          <Text style={styles.text}>Password</Text>
-          <InputPassword
-            onChangeText={(password) => this.setState({password})}
-            container={styles.container}
-          />
-        </View>
-        <TouchableOpacity onPress={this.doLogin} style={styles.bg3}>
-          <Text style={styles.btnfont}>Go chat</Text>
+        <TouchableOpacity style={styles.btnFacebookForm}>
+          <Text style={styles.btnFacebook}>Continue with Facebook</Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -61,63 +51,39 @@ class SignIn extends Component {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    borderWidth: 1,
-    borderRadius: 12,
-    paddingHorizontal: 10,
-    marginVertical: 10,
-    alignItems: 'center',
-  },
-  input: {
-    flex: 1,
-  },
   backImgage: {
     backgroundColor: '#d9ecf2',
-  },
-  bg1: {
-    backgroundColor: 'white',
-    paddingVertical: 10,
-    borderBottomRightRadius: 20,
-    borderBottomLeftRadius: 20,
-  },
-  bg2: {
-    backgroundColor: 'white',
-    marginTop: 10,
-    marginHorizontal: 10,
-    borderRadius: 12,
-    padding: 10,
-  },
-  bg3: {
-    backgroundColor: '#ff1616',
-    alignItems: 'center',
-    marginTop: 10,
-    marginHorizontal: 10,
-    borderRadius: 12,
-    padding: 10,
-  },
-  logo: {
-    height: 50,
-    resizeMode: 'contain',
   },
   text: {
     fontSize: 16,
     fontWeight: 'bold',
   },
-  btnfont: {
+  title: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    paddingHorizontal: 16,
+  },
+  subTitle: {
+    fontSize: 14,
+    fontWeight: '300',
+    marginTop: 10,
+    paddingHorizontal: 16,
+  },
+  btnForm: {
+    paddingHorizontal: 16,
+    marginTop: 350,
+  },
+  btnFacebookForm: {
+    marginHorizontal: 16,
+    marginTop: 15,
+    paddingVertical: 16,
+    backgroundColor: 'blue',
+    borderRadius: 10,
+  },
+  btnFacebook: {
+    textAlign: 'center',
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold',
-  },
-  bg4: {
-    backgroundColor: 'white',
-    marginHorizontal: 10,
-    borderRadius: 12,
-    padding: 10,
-    marginTop: 50,
-  },
-  title: {
-    fontSize: 24,
     fontWeight: 'bold',
   },
 });

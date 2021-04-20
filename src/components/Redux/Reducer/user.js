@@ -1,22 +1,30 @@
 const initialState = {
-  chatUser: null,
-  historyChat: null,
+  token: null,
+  user: null,
   message: '',
   errorMsg: '',
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'DETAIL_CHAT_USER': {
+    case 'SIGN_UP': {
       return {
         ...state,
-        chatUser: action.payload,
+        message: action.payload,
       };
     }
-    case 'ALLCHAT_USER': {
+    case 'SIGN_IN': {
       return {
         ...state,
-        historyChat: action.payload,
+        token: action.payload,
+        user: action.user,
+      };
+    }
+    case 'SIGN_OUT': {
+      return {
+        ...state,
+        token: null,
+        user: null,
       };
     }
     case 'SET_AUTH_MESSAGE': {

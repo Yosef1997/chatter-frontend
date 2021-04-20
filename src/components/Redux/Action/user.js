@@ -1,27 +1,5 @@
 import http from '../../Helper/http';
 
-export const updateUser = (token, id, data) => {
-  return async (dispatch) => {
-    try {
-      dispatch({
-        type: 'USER_MESSAGE',
-        payload: '',
-      });
-      const results = await http(token).patch(`/user/${id}`, data);
-      dispatch({
-        type: 'UPDATE_USER',
-        payload: results.data.results,
-      });
-    } catch (err) {
-      const {message} = err.response.data;
-      dispatch({
-        type: 'USER_MESSAGE',
-        payload: message,
-      });
-    }
-  };
-};
-
 export const user = (id) => {
   return async (dispatch) => {
     try {

@@ -57,6 +57,32 @@ export const signin = (email, password) => {
   };
 };
 
+export const updateUser = (token, id, data) => {
+  return async (dispatch) => {
+    try {
+      const form = new FormData();
+      Object.keys(data).forEach((key) => {
+        form.append(key, data[key]);
+      });
+      dispatch({
+        type: 'USER_MESSAGE',
+        payload: '',
+      });
+      const results = await http(token).patch(`/user/${id}`, form);
+      dispatch({
+        type: 'UPDATE_USER',
+        payload: results.data.results,
+      });
+    } catch (err) {
+      const {message} = err.response.data;
+      dispatch({
+        type: 'USER_MESSAGE',
+        payload: message,
+      });
+    }
+  };
+};
+
 export const signout = () => ({
-  type: 'SIGNOUT',
+  type: 'SIGN_OUT',
 });

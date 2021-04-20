@@ -6,6 +6,14 @@ export default class index extends Component {
   render() {
     return (
       <View style={styles.cardText}>
+        <TouchableOpacity onPress={this.props.goBack}>
+          <Icon
+            name={this.props.back}
+            size={this.props.size3}
+            style={this.props.icon3}
+          />
+        </TouchableOpacity>
+
         <Text style={styles.label}>{this.props.label}</Text>
         <TouchableOpacity>
           <Icon

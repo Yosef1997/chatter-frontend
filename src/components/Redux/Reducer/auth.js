@@ -1,10 +1,6 @@
 const initialState = {
   token: null,
-  updateUser: null,
-  detailUser: null,
   user: null,
-  allUser: null,
-  page: null,
   message: '',
   errorMsg: '',
 };
@@ -24,38 +20,19 @@ const authReducer = (state = initialState, action) => {
         user: action.user,
       };
     }
-    case 'UPDATE_USER': {
-      return {
-        ...state,
-        updateUser: action.payload,
-      };
-    }
-    case 'DETAIL_USER': {
-      return {
-        ...state,
-        detailUser: action.payload,
-      };
-    }
-    case 'USER': {
-      return {
-        ...state,
-        allUser: action.payload,
-        page: action.pageInfo,
-      };
-    }
-    case 'SET_AUTH_MESSAGE': {
-      return {
-        ...state,
-        errorMsg: action.payload,
-      };
-    }
-    case 'SIGNOUT': {
+    case 'SIGN_OUT': {
       return {
         ...state,
         token: null,
         user: null,
         message: '',
         errorMsg: '',
+      };
+    }
+    case 'SET_AUTH_MESSAGE': {
+      return {
+        ...state,
+        errorMsg: action.payload,
       };
     }
     default:
