@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import SignUp from '../pages/SignUp';
-import SignIn from '../pages/SignIn';
+import SignUp from './signup';
+import SignIn from './signin';
 import Profil from '../pages/Profil';
 import Search from '../pages/Search';
 import BottomTab from './BottomTab';
