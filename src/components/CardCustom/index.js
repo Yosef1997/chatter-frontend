@@ -5,8 +5,8 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class index extends Component {
   render() {
     return (
-      <View style={this.props.style}>
-        <View style={this.props.card}>
+      <View style={this.props.parent}>
+        <View style={styles.card}>
           <Icon name={this.props.icon1} size={this.props.size} />
           <Text style={this.props.textStyle}>{this.props.text}</Text>
         </View>
@@ -24,6 +24,9 @@ export default class index extends Component {
 }
 
 const styles = StyleSheet.create({
+  card: {
+    flexDirection: 'row',
+  },
   cardText: {
     flex: 1,
     marginLeft: 10,

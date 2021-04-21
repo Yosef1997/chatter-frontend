@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import Header from '../components/Header';
-import BackImg from '../assets/background.jpg';
 import CardSetting from '../components/CardCustom';
 
 export default class Profil extends Component {
@@ -15,22 +14,22 @@ export default class Profil extends Component {
           cardText={styles.cardText}
         />
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Profil')}>
-          <CardSetting
-            icon1="person"
-            text="Profile"
-            size={20}
-            card={styles.card}
-            textStyle={styles.textStyle}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Account')}>
           <CardSetting
             icon1="shield"
             text="Account"
             size={20}
-            card={styles.card}
+            parent={styles.card}
+            textStyle={styles.textStyle}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Profil')}>
+          <CardSetting
+            icon1="person"
+            text="Profile"
+            size={20}
+            parent={styles.card}
             textStyle={styles.textStyle}
           />
         </TouchableOpacity>
@@ -56,8 +55,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     backgroundColor: 'white',
     marginHorizontal: 10,
-    marginVertical: 10,
-    padding: 10,
+    marginTop: 10,
+    alignItems: 'center',
+    paddingVertical: 5,
+    paddingHorizontal: 10,
     borderRadius: 12,
   },
   textStyle: {
