@@ -16,7 +16,8 @@ export default class LandingScreen extends Component {
         <Button onPress={() => this.props.navigation.navigate('SignIn')}>
           Log In
         </Button>
-        <TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('InputName')}>
           <Text style={styles.textSignUp}>Sign up</Text>
         </TouchableOpacity>
       </View>

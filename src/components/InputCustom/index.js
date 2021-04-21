@@ -1,11 +1,17 @@
 import React, {Component} from 'react';
-import {TouchableOpacity, Text, View, TextInput} from 'react-native';
+import {
+  TouchableOpacity,
+  Text,
+  View,
+  TextInput,
+  StyleSheet,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class app extends Component {
   render() {
     return (
-      <View style={this.props.container}>
+      <View style={styles.container}>
         <Text>{this.props.text}</Text>
         <TouchableOpacity>
           <Icon
@@ -33,8 +39,15 @@ export default class app extends Component {
           placeholder={this.props.placeholder}
           keyboardType={this.props.keyboardType}
           onChangeText={this.props.onChangeText}
+          value={this.props.value}
         />
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
+});

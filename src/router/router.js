@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import SignUp from './signup';
-import SignIn from './signin';
+import SignIn from './auth';
 import Profil from '../pages/Profil';
 import Search from '../pages/Search';
 import BottomTab from './BottomTab';
 import Account from '../pages/Account';
 import Message from '../pages/Message';
-import LandingScreen from '../pages/LandingScreen';
 import SplashScreen from 'react-native-splash-screen';
 import {connect} from 'react-redux';
 
@@ -22,18 +20,6 @@ class router extends Component {
   render() {
     return (
       <Stack.Navigator>
-        {/* {this.props.auth.token === null ? ( */}
-        {/* <React.Fragment> */}
-        <Stack.Screen
-          component={LandingScreen}
-          options={{headerShown: false}}
-          name="LandingScreen"
-        />
-        <Stack.Screen
-          component={SignUp}
-          options={{headerShown: false}}
-          name="SignUp"
-        />
         <Stack.Screen
           component={SignIn}
           options={{headerShown: false}}

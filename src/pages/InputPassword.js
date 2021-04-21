@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {LogBox} from 'react-native';
 import {
   Text,
   View,
@@ -8,7 +9,8 @@ import {
 } from 'react-native';
 // import Logo from '../assets/chatter.png';
 import Header from '../components/Header';
-import Button from '../components/Button';
+import InputCustom from '../components/InputCustom';
+import ButtonCircle from '../components/ButtonCircle';
 import {connect} from 'react-redux';
 import {signin, detailUser} from '../components/Redux/Action/auth';
 
@@ -19,32 +21,30 @@ class SignIn extends Component {
   };
   doLogin = async () => {
     this.props.navigation.navigate('InputPhone');
-    // const {email, password} = this.state;
-    // await this.props.signin(email, password);
-    // await this.props.detailUser(this.props.auth.user.id);
-    // if (this.props.auth.token !== null) {
-    //   this.props.navigation.navigate('BottomTab');
-    // }
   };
 
   render() {
     return (
       <ScrollView style={styles.backImgage}>
         <Header back="chevron-back" size3={25} />
-        <Text style={styles.title}>Log in to Chatter</Text>
+        <Text style={styles.title}>Create Password</Text>
         <Text style={styles.subTitle}>
-          Log in with your registered phonre number to get{'\n'}started
+          Using at least one latter, one number, and four other character
         </Text>
-        <Text style={styles.subTitle}>
-          If you linked your account to Facebook, you can{'\n'}also log in that
-          way
-        </Text>
+        <InputCustom
+          container={styles.inputForm}
+          placeholder="Password"
+          inputStyle={styles.inputStyle}
+        />
+        <InputCustom
+          container={styles.inputForm}
+          placeholder="Repeat password"
+          inputStyle={styles.inputStyle}
+        />
+
         <View style={styles.btnForm}>
-          <Button onPress={this.doLogin}>Log in with phone number</Button>
+          <ButtonCircle onPress={this.doLogin}>Next</ButtonCircle>
         </View>
-        <TouchableOpacity style={styles.btnFacebookForm}>
-          <Text style={styles.btnFacebook}>Continue with Facebook</Text>
-        </TouchableOpacity>
       </ScrollView>
     );
   }
@@ -57,6 +57,16 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  cameraForm: {
+    borderWidth: 0.5,
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    paddingVertical: 30,
+    paddingHorizontal: 25,
+    marginTop: 16,
+    marginLeft: 16,
   },
   title: {
     fontSize: 26,
@@ -71,20 +81,14 @@ const styles = StyleSheet.create({
   },
   btnForm: {
     paddingHorizontal: 16,
-    marginTop: 350,
+    marginTop: 50,
+    alignItems: 'flex-end',
   },
-  btnFacebookForm: {
+  inputStyle: {
+    borderBottomWidth: 1,
     marginHorizontal: 16,
-    marginTop: 15,
-    paddingVertical: 16,
-    backgroundColor: 'blue',
-    borderRadius: 10,
-  },
-  btnFacebook: {
-    textAlign: 'center',
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+    flex: 1,
+    marginTop: 30,
   },
 });
 

@@ -7,25 +7,25 @@ import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
 import {detailUser} from '../components/Redux/Action/auth';
 import {detailChatUser} from '../components/Redux/Action/user';
-import {REACT_APP_API_URL as API_URL} from '@env';
+// import {REACT_APP_API_URL as API_URL} from '@env';
 
 class Home extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        {this.props.auth.detailUser.picture === null ? (
-          <CardProfile
-            source={ProfileImg}
-            label={this.props.auth.detailUser.name}
-            message={this.props.auth.detailUser.status}
-            icon2="settings-outline"
-            size={25}
-            style={styles.card}
-            image={styles.cardImg}
-            onPress={() => this.props.navigation.navigate('Profil')}
-          />
-        ) : (
-          <CardProfile
+        {/* {this.props.auth.detailUser.picture === null ? ( */}
+        <CardProfile
+          source={ProfileImg}
+          // label={this.props.auth.detailUser.name}
+          // message={this.props.auth.detailUser.status}
+          icon2="settings-outline"
+          size={25}
+          style={styles.card}
+          image={styles.cardImg}
+          onPress={() => this.props.navigation.navigate('Profil')}
+        />
+        {/* ) : (
+        <CardProfile
             source={{
               uri: API_URL.concat(
                 `/upload/profile/${this.props.auth.detailUser.picture}`,
@@ -39,7 +39,7 @@ class Home extends Component {
             image={styles.cardImg}
             onPress={() => this.props.navigation.navigate('Profil')}
           />
-        )}
+        )} */}
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Search')}>
           <Search

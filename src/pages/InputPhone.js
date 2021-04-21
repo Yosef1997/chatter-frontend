@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {LogBox} from 'react-native';
 import {
   Text,
   View,
@@ -8,7 +9,9 @@ import {
 } from 'react-native';
 // import Logo from '../assets/chatter.png';
 import Header from '../components/Header';
-import Button from '../components/Button';
+import InputCustom from '../components/InputCustom';
+import ButtonCircle from '../components/ButtonCircle';
+import PickerLocation from '../components/PickerLocation';
 import {connect} from 'react-redux';
 import {signin, detailUser} from '../components/Redux/Action/auth';
 
@@ -18,33 +21,29 @@ class SignIn extends Component {
     password: '',
   };
   doLogin = async () => {
-    this.props.navigation.navigate('InputPhone');
-    // const {email, password} = this.state;
-    // await this.props.signin(email, password);
-    // await this.props.detailUser(this.props.auth.user.id);
-    // if (this.props.auth.token !== null) {
-    //   this.props.navigation.navigate('BottomTab');
-    // }
+    this.props.navigation.navigate('BottomTab');
   };
 
   render() {
     return (
       <ScrollView style={styles.backImgage}>
         <Header back="chevron-back" size3={25} />
-        <Text style={styles.title}>Log in to Chatter</Text>
-        <Text style={styles.subTitle}>
-          Log in with your registered phonre number to get{'\n'}started
+        <Text style={styles.title}>
+          What's the phone number for this device
         </Text>
         <Text style={styles.subTitle}>
-          If you linked your account to Facebook, you can{'\n'}also log in that
-          way
+          By tapping arrow button, you accept Chatter's Terms and Conditions of
+          Use and Privacy Policy.
         </Text>
+        <PickerLocation text="Indonesia" />
+        <InputCustom
+          placeholder="Phone number"
+          inputStyle={styles.inputStyle}
+          keyboardType="number-pad"
+        />
         <View style={styles.btnForm}>
-          <Button onPress={this.doLogin}>Log in with phone number</Button>
+          <ButtonCircle onPress={this.doLogin}>Next</ButtonCircle>
         </View>
-        <TouchableOpacity style={styles.btnFacebookForm}>
-          <Text style={styles.btnFacebook}>Continue with Facebook</Text>
-        </TouchableOpacity>
       </ScrollView>
     );
   }
@@ -71,7 +70,8 @@ const styles = StyleSheet.create({
   },
   btnForm: {
     paddingHorizontal: 16,
-    marginTop: 350,
+    marginTop: 50,
+    alignItems: 'flex-end',
   },
   btnFacebookForm: {
     marginHorizontal: 16,
@@ -85,6 +85,12 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  inputStyle: {
+    borderBottomWidth: 1,
+    marginHorizontal: 16,
+    flex: 1,
+    marginTop: 30,
   },
 });
 
