@@ -19,7 +19,12 @@ class Chat extends Component {
     return (
       <ScrollView style={styles.backImgage}>
         <ScrollView>
-          <Header label="Chatter" icon="ellipsis-vertical-outline" size={25} />
+          <Header
+            label="Chatter"
+            icon="ellipsis-vertical-outline"
+            size={25}
+            cardText={styles.cardText}
+          />
           <Search
             Icon="search1"
             size={15}
@@ -53,9 +58,19 @@ class Chat extends Component {
 }
 
 const styles = StyleSheet.create({
+  cardText: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
   backImgage: {
     flex: 1,
     resizeMode: 'cover',
+    backgroundColor: '#d9ecf2',
   },
   input: {
     flex: 1,

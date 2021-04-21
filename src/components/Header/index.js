@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class index extends Component {
   render() {
     return (
-      <View style={styles.cardText}>
+      <View style={this.props.cardText}>
         <TouchableOpacity onPress={this.props.goBack}>
           <Icon
             name={this.props.back}
@@ -35,13 +35,6 @@ export default class index extends Component {
 }
 
 const styles = StyleSheet.create({
-  cardText: {
-    flexDirection: 'row',
-    backgroundColor: '#D9ECF2',
-    alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
   label: {
     fontSize: 36,
     fontWeight: 'bold',

@@ -27,7 +27,7 @@ class SignIn extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header back="chevron-back" size3={25} />
+        <Header back="chevron-back" size3={25} cardText={styles.cardText} />
         <Text style={styles.title}>Create new account</Text>
         <Text style={styles.subTitle}>
           Other Chatter's user can see your name and profile
@@ -49,6 +49,14 @@ class SignIn extends Component {
 }
 
 const styles = StyleSheet.create({
+  cardText: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
   backImgage: {
     backgroundColor: '#d9ecf2',
   },

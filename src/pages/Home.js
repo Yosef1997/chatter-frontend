@@ -72,16 +72,21 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     marginTop: 15,
     borderRadius: 12,
+    elevation: 1,
   },
   backImgage: {
     flex: 1,
     resizeMode: 'cover',
+    backgroundColor: '#d9ecf2',
   },
   card: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
     backgroundColor: 'white',
+    elevation: 1,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
   },
   cardImg: {
     height: 50,

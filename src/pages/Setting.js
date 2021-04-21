@@ -8,7 +8,12 @@ export default class Profil extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header label="Setting" icon="ellipsis-vertical-outline" size={25} />
+        <Header
+          label="Setting"
+          icon="ellipsis-vertical-outline"
+          size={25}
+          cardText={styles.cardText}
+        />
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate('Profil')}>
           <CardSetting
@@ -35,6 +40,15 @@ export default class Profil extends Component {
 }
 
 const styles = StyleSheet.create({
+  cardText: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
   backImgage: {
     backgroundColor: '#d9ecf2',
   },
