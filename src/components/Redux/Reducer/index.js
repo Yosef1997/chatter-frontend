@@ -4,6 +4,7 @@ import {persistReducer} from 'redux-persist';
 import hardSet from 'redux-persist/lib/stateReconciler/hardSet';
 import authReducer from './auth';
 import userReducer from './user';
+import chatReducer from './chat';
 
 const authConfig = {
   key: 'auth',
@@ -14,6 +15,7 @@ const authConfig = {
 const reducers = combineReducers({
   auth: persistReducer(authConfig, authReducer),
   user: userReducer,
+  chat: chatReducer,
 });
 
 export default reducers;

@@ -1,15 +1,15 @@
 import http from '../../Helper/http';
 
-export const detailChat = (id) => {
+export const allChat = (token, id) => {
   return async (dispatch) => {
     try {
       dispatch({
         type: 'CHAT_MESSAGE',
         payload: '',
       });
-      const results = await http().get(`/user/${id}`);
+      const results = await http(token).get(`/chat/all/${id}`);
       dispatch({
-        type: 'DETAIL_CHAT_USER',
+        type: 'ALL_CHAT',
         payload: results.data.results,
       });
     } catch (err) {
@@ -22,16 +22,16 @@ export const detailChat = (id) => {
   };
 };
 
-export const allChat = (token, id) => {
+export const detailChat = (token, id) => {
   return async (dispatch) => {
     try {
       dispatch({
         type: 'CHAT_MESSAGE',
         payload: '',
       });
-      const results = await http(token).get(`/chat/all/${id}`);
+      const results = await http(token).get(`/user/${id}`);
       dispatch({
-        type: 'ALLCHAT_USER',
+        type: 'DETAIL_CHAT',
         payload: results.data.results,
       });
     } catch (err) {
