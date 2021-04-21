@@ -1,12 +1,13 @@
 import http from '../../Helper/http';
 import jwt from 'jwt-decode';
 
-export const signup = (name, email, password) => {
+export const signup = (name, picture, password, phone) => {
   return async (dispatch) => {
     const params = new URLSearchParams();
+    params.append('picture', picture);
     params.append('name', name);
-    params.append('email', email);
     params.append('password', password);
+    params.append('phone', phone);
     try {
       dispatch({
         type: 'SET_AUTH_MESSAGE',
@@ -28,11 +29,36 @@ export const signup = (name, email, password) => {
   };
 };
 
-export const signin = (email, password) => {
+export const dataRegister = (data) => {
+  return async (dispatch) => {
+    const form = new FormData();
+    Object.keys(data).forEach((key) => {
+      form.append(key, data[key]);
+    });
+    try {
+      dispatch({
+        type: 'SET_AUTH_MESSAGE',
+        payload: '',
+      });
+      dispatch({
+        type: 'DATA_REGISTER',
+        payload: form,
+      });
+    } catch (err) {
+      console.log(err);
+      const {message} = err.response.data;
+      dispatch({
+        type: 'SET_AUTH_MESSAGE',
+        payload: message,
+      });
+    }
+  };
+};
+
+export const signin = (phone) => {
   return async (dispatch) => {
     const params = new URLSearchParams();
-    params.append('email', email);
-    params.append('password', password);
+    params.append('phone', phone);
     try {
       dispatch({
         type: 'SET_AUTH_MESSAGE',

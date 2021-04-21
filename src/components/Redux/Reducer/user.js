@@ -1,33 +1,24 @@
 const initialState = {
-  token: null,
-  user: null,
-  message: '',
+  allUser: null,
+  detailUser: null,
   errorMsg: '',
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SIGN_UP': {
+    case 'ALL_USER': {
       return {
         ...state,
-        message: action.payload,
+        allUser: action.payload,
       };
     }
-    case 'SIGN_IN': {
+    case 'DETAIL_USER': {
       return {
         ...state,
-        token: action.payload,
-        user: action.user,
+        detailUser: action.payload,
       };
     }
-    case 'SIGN_OUT': {
-      return {
-        ...state,
-        token: null,
-        user: null,
-      };
-    }
-    case 'SET_AUTH_MESSAGE': {
+    case 'USER_MESSAGE': {
       return {
         ...state,
         errorMsg: action.payload,

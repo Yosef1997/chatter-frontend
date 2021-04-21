@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {ScrollView, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
-import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import SearchBar from '../components/InputCustom';
 // import ProfileImg from '../assets/F9.jpg';

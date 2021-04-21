@@ -1,5 +1,10 @@
 const initialState = {
   token: null,
+  // picture: null,
+  // name: null,
+  // password: null,
+  // phone: null,
+  dataRegister: null,
   user: null,
   message: '',
   errorMsg: '',
@@ -20,11 +25,22 @@ const authReducer = (state = initialState, action) => {
         user: action.user,
       };
     }
+    case 'DATA_REGISTER': {
+      return {
+        ...state,
+        dataRegister: {...state.dataRegister, ...action.payload},
+      };
+    }
+    case 'UPDATE_USER': {
+      return {
+        ...state,
+        user: {...state.user, ...action.payload},
+      };
+    }
     case 'SIGN_OUT': {
       return {
         ...state,
         token: null,
-        user: null,
         message: '',
         errorMsg: '',
       };
