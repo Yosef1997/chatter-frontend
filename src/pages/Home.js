@@ -20,7 +20,7 @@ class Home extends Component {
           // message={this.props.auth.detailUser.status}
           icon2="settings-outline"
           size={25}
-          style={styles.card}
+          parent={styles.card}
           image={styles.cardImg}
           onPress={() => this.props.navigation.navigate('Profil')}
         />
@@ -65,6 +65,16 @@ class Home extends Component {
 }
 
 const styles = StyleSheet.create({
+  cardText: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+
   container: {
     backgroundColor: 'white',
     flexDirection: 'row',

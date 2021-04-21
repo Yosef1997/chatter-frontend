@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
 import Search from '../components/InputCustom';
 import CardChat from '../components/CardCustom';
-import BackImg from '../assets/background.jpg';
 import Header from '../components/Header';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';

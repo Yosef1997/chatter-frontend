@@ -14,22 +14,27 @@ class Search extends Component {
   state = {
     search: '',
   };
-  async componentDidMount() {
-    await this.props.allUser(this.props.auth.token);
-  }
-  doSearch = (search) => {
-    this.setState({search: search}, async () => {
-      await this.props.allUser(this.props.auth.token, this.state.search);
-    });
-  };
-  doChat = async (id) => {
-    await this.props.detailChatUser(id);
-    this.props.navigation.navigate('Message');
-  };
+  // async componentDidMount() {
+  //   await this.props.allUser(this.props.auth.token);
+  // }
+  // doSearch = (search) => {
+  //   this.setState({search: search}, async () => {
+  //     await this.props.allUser(this.props.auth.token, this.state.search);
+  //   });
+  // };
+  // doChat = async (id) => {
+  //   await this.props.detailChatUser(id);
+  //   this.props.navigation.navigate('Message');
+  // };
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header label="Search" />
+        <Header
+          label="Search"
+          icon="ellipsis-vertical-outline"
+          size={25}
+          cardText={styles.cardText}
+        />
         <SearchBar
           Icon="search1"
           size={15}
@@ -63,8 +68,18 @@ class Search extends Component {
   }
 }
 const styles = StyleSheet.create({
+  cardText: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
   backImgage: {
     flex: 1,
+    backgroundColor: '#d9ecf2',
   },
   input: {
     flex: 1,
