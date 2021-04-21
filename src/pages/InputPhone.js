@@ -40,6 +40,7 @@ class SignIn extends Component {
           placeholder="Phone number"
           inputStyle={styles.inputStyle}
           keyboardType="number-pad"
+          container={styles.inputForm}
         />
         <View style={styles.btnForm}>
           <ButtonCircle onPress={this.doLogin}>Next</ButtonCircle>
@@ -50,6 +51,9 @@ class SignIn extends Component {
 }
 
 const styles = StyleSheet.create({
+  inputForm: {
+    flexDirection: 'row',
+  },
   backImgage: {
     backgroundColor: '#d9ecf2',
   },

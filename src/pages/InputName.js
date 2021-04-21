@@ -35,7 +35,11 @@ class SignIn extends Component {
         <TouchableOpacity style={styles.cameraForm}>
           <Icon name="camera" size={50} />
         </TouchableOpacity>
-        <InputCustom placeholder="Full name" inputStyle={styles.inputStyle} />
+        <InputCustom
+          container={styles.inputForm}
+          placeholder="Full name"
+          inputStyle={styles.inputStyle}
+        />
         <View style={styles.btnForm}>
           <ButtonCircle onPress={this.doLogin}>Next</ButtonCircle>
         </View>
@@ -83,6 +87,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     flex: 1,
     marginTop: 30,
+  },
+  inputForm: {
+    flexDirection: 'row',
   },
 });
 

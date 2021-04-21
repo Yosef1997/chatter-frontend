@@ -90,6 +90,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 30,
   },
+  inputForm: {
+    flexDirection: 'row',
+  },
 });
 
 const mapStateToProps = (state) => ({

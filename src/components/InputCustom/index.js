@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 export default class app extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={this.props.container}>
         <Text>{this.props.text}</Text>
         <TouchableOpacity>
           <Icon
@@ -45,9 +45,3 @@ export default class app extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-  },
-});
