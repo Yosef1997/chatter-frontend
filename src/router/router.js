@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import SignIn from './auth';
+import Auth from './auth';
 import Profil from '../pages/Profil';
 import Search from '../pages/Search';
 import BottomTab from './BottomTab';
@@ -21,9 +21,9 @@ class router extends Component {
     return (
       <Stack.Navigator>
         <Stack.Screen
-          component={SignIn}
+          component={Auth}
           options={{headerShown: false}}
-          name="SignIn"
+          name="Auth"
         />
         {/* </React.Fragment>
         // ) : (
