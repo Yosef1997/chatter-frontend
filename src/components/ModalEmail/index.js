@@ -7,27 +7,38 @@ import {
   Pressable,
   View,
 } from 'react-native';
+import Button from '../Button';
+import {Formik} from 'formik';
 import {connect} from 'react-redux';
 import {updateUser} from '../Redux/Action/auth';
 
 class index extends Component {
   state = {
     modalVisible: false,
-    email: '',
     inputEmail: this.props.inputText,
   };
 
   setModalVisible = async (visible) => {
     this.setState({modalVisible: visible});
   };
-  closeModal = async () => {
-    const {email} = this.state;
-    const {id} = this.props.auth.user;
+
+  emailValidation(values) {
+    const re = /^(?!\.)((?!.*\.{2})[a-zA-Z0-9\u00E0-\u00FC.!#$%&'*+-/=?^_`{|}~\-\d]+)@(?!\.)([a-zA-Z0-9\u00E0-\u00FC\-\.\d]+)((\.([a-zA-Z]){2,63})+)$/i;
+    const errors = {};
+    const {email} = values;
+    if (!email) {
+      errors.msg = 'Email Required';
+    } else if (re.test(email) === false) {
+      errors.msg = 'Email inValid';
+    }
+    return errors;
+  }
+
+  doUpdate = async (values) => {
+    const {user} = this.props.auth;
     const {token} = this.props.auth;
-    const data = new FormData();
-    data.append('email', email);
-    await this.props.auth.updateUser(token, id, data);
-    this.setState({modalVisible: false, inputEmail: this.state.email});
+    await this.props.auth.updateUser(token, user.id, {email: values.email});
+    this.setState({modalVisible: false});
   };
 
   render() {
@@ -43,18 +54,37 @@ class index extends Component {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <Text style={styles.modalText}>{this.props.label}</Text>
-              <Text style={styles.text2Style}>{this.props.message}</Text>
-              <TextInput
-                onChangeText={(email) => this.setState({email})}
-                keyboardType={this.props.keyboardType}
-                style={styles.input}
-              />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={this.closeModal}>
-                <Text style={styles.btnModal}>Submit</Text>
-              </Pressable>
+              <Formik
+                initialValues={{
+                  email: '',
+                }}
+                validate={(values) => this.emailValidation(values)}
+                onSubmit={(values, {resetForm}) => {
+                  this.setState({isLoading: true});
+                  this.doUpdate(values);
+                  setTimeout(() => {
+                    resetForm();
+                  }, 500);
+                }}>
+                {({values, errors, handleChange, handleSubmit}) => (
+                  <>
+                    <Text style={styles.modalText}>{this.props.label}</Text>
+                    <Text style={styles.text2Style}>{this.props.message}</Text>
+                    <TextInput
+                      onChangeText={handleChange('email')}
+                      keyboardType="email-address"
+                      value={values.email}
+                      style={styles.input}
+                    />
+                    <Button onPress={handleSubmit}>Submit</Button>
+                    {/* <Pressable
+                      style={[styles.button, styles.buttonClose]}
+                      onPress={handleSubmit}>
+                      <Text style={styles.btnModal}>Submit</Text>
+                    </Pressable> */}
+                  </>
+                )}
+              </Formik>
             </View>
           </View>
         </Modal>

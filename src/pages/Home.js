@@ -16,7 +16,7 @@ class Home extends Component {
         {/* {this.props.auth.detailUser.picture === null ? ( */}
         <CardProfile
           source={ProfileImg}
-          // label={this.props.auth.detailUser.name}
+          label="Yosef"
           // message={this.props.auth.detailUser.status}
           icon2="settings-outline"
           size={25}

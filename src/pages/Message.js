@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import Header from '../components/Header';
-import BackImg from '../assets/background.jpg';
 import InputMessage from '../components/InputCustom';
 import {connect} from 'react-redux';
 
@@ -10,21 +9,30 @@ class Message extends Component {
     return (
       <React.Fragment>
         <Header
-          label={this.props.user.chatUser.name}
+          label="Rio"
           icon="call-outline"
           size={25}
           icon1={styles.icon}
           size2={35}
           icon2="reorder-three-sharp"
+          cardText={styles.cardText}
         />
         <ScrollView style={styles.backImgage}>
-          <ScrollView>
-            {[
-              ...Array(1000).map((item) => {
-                return <Text>asdbg</Text>;
-              }),
-            ]}
-          </ScrollView>
+          <View style={{alignItems: 'baseline'}}>
+            <View style={styles.receive}>
+              <Text style={styles.textMsg}>What's up?</Text>
+            </View>
+          </View>
+          <View style={{alignItems: 'flex-end'}}>
+            <View style={styles.send}>
+              <Text style={styles.textMsg}>fine</Text>
+            </View>
+          </View>
+          {/* {[
+            ...Array(1000).map((item) => {
+              return <Text>asdbg</Text>;
+            }),
+          ]} */}
         </ScrollView>
         <InputMessage
           Icon="plus"
@@ -41,9 +49,18 @@ class Message extends Component {
 }
 
 const styles = StyleSheet.create({
+  cardText: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
   backImgage: {
     flex: 1,
-    resizeMode: 'cover',
+    backgroundColor: '#d9ecf2',
   },
   icon: {
     marginRight: 15,
@@ -58,12 +75,30 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inputStyle: {
-    borderWidth: 1,
+    borderWidth: 0.1,
     flex: 1,
     borderRadius: 22,
     marginVertical: 10,
     paddingHorizontal: 15,
-    backgroundColor: '#eaeaea',
+    backgroundColor: '#d9ecf2',
+  },
+  receive: {
+    backgroundColor: 'white',
+    marginTop: 10,
+    marginHorizontal: 10,
+    padding: 10,
+    borderRadius: 12,
+  },
+  send: {
+    backgroundColor: 'pink',
+    marginTop: 10,
+    marginHorizontal: 10,
+    padding: 10,
+    borderRadius: 12,
+  },
+  textMsg: {
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
 

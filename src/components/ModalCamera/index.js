@@ -111,7 +111,7 @@ class index extends Component {
           </View>
         </Modal>
         <TouchableOpacity onPress={() => this.setModalVisible(true)}>
-          {this.props.auth.detailUser.picture &&
+          {/* {this.props.auth.detailUser.picture &&
           this.props.auth.detailUser.picture !== 'null' ? (
             <Image
               source={{
@@ -121,9 +121,9 @@ class index extends Component {
               }}
               style={styles.cardImg}
             />
-          ) : (
-            <Image source={ProfilImg} style={styles.cardImg} />
-          )}
+          ) : ( */}
+          <Image source={ProfilImg} style={styles.cardImg} />
+          {/* )} */}
         </TouchableOpacity>
       </View>
     );
@@ -132,7 +132,7 @@ class index extends Component {
 
 const styles = StyleSheet.create({
   bg1: {
-    backgroundColor: '#e6e4df',
+    backgroundColor: '#d9ecf2',
     alignItems: 'center',
     marginHorizontal: 10,
     marginTop: 10,

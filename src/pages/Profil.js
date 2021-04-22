@@ -27,28 +27,28 @@ class Profil extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header label="Profile" />
+        <Header label="Profile" cardText={styles.cardText} />
         <ModalCamera />
         <ModalName
           label="Name"
           message="Write your name"
-          inputText={this.props.auth.detailUser.name}
+          // inputText={this.props.auth.detailUser.name}
         />
         <ModalStatus
           label="Status"
           message="Write your status"
-          inputText={this.props.auth.detailUser.status}
+          // inputText={this.props.auth.detailUser.status}
         />
         <ModalPhone
           label="Phone number"
           message="Write your Phone number"
-          inputText={this.props.auth.detailUser.phone}
+          // inputText={this.props.auth.detailUser.phone}
           keyboardType="numeric"
         />
         <ModalUserID
           label="User ID"
           message="Write your User ID"
-          inputText={this.props.auth.detailUser.userID}
+          // inputText={this.props.auth.detailUser.userID}
         />
       </ScrollView>
     );
@@ -58,13 +58,17 @@ class Profil extends Component {
 const styles = StyleSheet.create({
   backImgage: {
     flex: 1,
+    backgroundColor: '#d9ecf2',
   },
-  // cardImg: {
-  //   height: 150,
-  //   width: 150,
-  //   borderRadius: 150,
-  //   opacity: 1,
-  // },
+  cardText: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderBottomLeftRadius: 12,
+    borderBottomRightRadius: 12,
+  },
   bg1: {
     backgroundColor: '#e6e4df',
     alignItems: 'center',

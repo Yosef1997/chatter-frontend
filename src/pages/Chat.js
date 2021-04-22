@@ -37,7 +37,7 @@ class Chat extends Component {
               source={ProfileImg}
               label="Yosef"
               message="hello"
-              style={styles.card}
+              parent={styles.card}
               image={styles.cardImg}
             />
           </TouchableOpacity>
@@ -46,7 +46,7 @@ class Chat extends Component {
               source={ProfileImg}
               label="Yosef"
               message="hello"
-              style={styles.card}
+              parent={styles.card}
               image={styles.cardImg}
             />
           </TouchableOpacity>
