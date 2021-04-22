@@ -18,12 +18,12 @@ class Message extends Component {
           cardText={styles.cardText}
         />
         <ScrollView style={styles.backImgage}>
-          <View style={{alignItems: 'baseline'}}>
+          <View style={styles.receiveForm}>
             <View style={styles.receive}>
               <Text style={styles.textMsg}>What's up?</Text>
             </View>
           </View>
-          <View style={{alignItems: 'flex-end'}}>
+          <View style={styles.sendForm}>
             <View style={styles.send}>
               <Text style={styles.textMsg}>fine</Text>
             </View>
@@ -75,12 +75,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   inputStyle: {
+    width: 10,
     borderWidth: 0.1,
     flex: 1,
     borderRadius: 22,
     marginVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#d9ecf2',
+  },
+  receiveForm: {
+    alignItems: 'baseline',
+  },
+  sendForm: {
+    alignItems: 'flex-end',
   },
   receive: {
     backgroundColor: 'white',

@@ -1,7 +1,8 @@
 // ===== Button
 // import all modules
 import React, {Fragment} from 'react';
-import {Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 export default function Button(props) {
   return (
@@ -10,7 +11,7 @@ export default function Button(props) {
         disabled={props.disabled ? true : false}
         style={styles.button(props.disabled)}
         onPress={props.onPress}>
-        <Text style={styles.text(props.disabled)}>{props.children}</Text>
+        <Icon style={styles.text(props.disabled)} name="arrowright" size={24} />
       </TouchableOpacity>
     </Fragment>
   );
@@ -40,13 +41,11 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#88888F',
         fontWeight: 'bold',
-        fontSize: 16,
       };
     } else {
       return {
         textAlign: 'center',
         color: 'white',
-        fontSize: 16,
         fontWeight: 'bold',
       };
     }

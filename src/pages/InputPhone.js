@@ -43,7 +43,7 @@ class SignIn extends Component {
           container={styles.inputForm}
         />
         <View style={styles.btnForm}>
-          <ButtonCircle onPress={this.doLogin}>Next</ButtonCircle>
+          <ButtonCircle onPress={this.doLogin} disabled={false} />
         </View>
       </ScrollView>
     );

@@ -52,22 +52,22 @@ class index extends Component {
           onRequestClose={() => {
             this.setModalVisible(!modalVisible);
           }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <Formik
-                initialValues={{
-                  email: '',
-                }}
-                validate={(values) => this.emailValidation(values)}
-                onSubmit={(values, {resetForm}) => {
-                  this.setState({isLoading: true});
-                  this.doUpdate(values);
-                  setTimeout(() => {
-                    resetForm();
-                  }, 500);
-                }}>
-                {({values, errors, handleChange, handleSubmit}) => (
-                  <>
+          <Formik
+            initialValues={{
+              email: '',
+            }}
+            validate={(values) => this.emailValidation(values)}
+            onSubmit={(values, {resetForm}) => {
+              this.setState({isLoading: true});
+              this.doUpdate(values);
+              setTimeout(() => {
+                resetForm();
+              }, 500);
+            }}>
+            {({values, errors, handleChange, handleSubmit}) => (
+              <>
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
                     <Text style={styles.modalText}>{this.props.label}</Text>
                     <Text style={styles.text2Style}>{this.props.message}</Text>
                     <TextInput
@@ -77,16 +77,17 @@ class index extends Component {
                       style={styles.input}
                     />
                     <Button onPress={handleSubmit}>Submit</Button>
-                    {/* <Pressable
+                  </View>
+                </View>
+
+                {/* <Pressable
                       style={[styles.button, styles.buttonClose]}
                       onPress={handleSubmit}>
                       <Text style={styles.btnModal}>Submit</Text>
                     </Pressable> */}
-                  </>
-                )}
-              </Formik>
-            </View>
-          </View>
+              </>
+            )}
+          </Formik>
         </Modal>
         <Pressable
           style={[styles.button, styles.buttonOpen]}
