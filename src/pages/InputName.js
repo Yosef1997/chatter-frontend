@@ -202,18 +202,15 @@ class SignIn extends Component {
               {errors.msg ? (
                 <Text style={styles.textError}>{errors.msg}</Text>
               ) : null}
+
               {this.state.isLoading === true ? (
                 <ActivityIndicator size="large" color="#ff1616" />
               ) : (
                 <View style={styles.btnForm}>
                   {values.name === '' ? (
-                    <ButtonCircle disabled={true} onPress={handleSubmit}>
-                      Next
-                    </ButtonCircle>
+                    <ButtonCircle disabled={true} onPress={handleSubmit} />
                   ) : (
-                    <ButtonCircle disabled={false} onPress={handleSubmit}>
-                      Next
-                    </ButtonCircle>
+                    <ButtonCircle disabled={false} onPress={handleSubmit} />
                   )}
                 </View>
               )}

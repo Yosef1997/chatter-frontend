@@ -31,10 +31,10 @@ export const signup = (name, picture, password, phone) => {
 
 export const dataRegister = (data) => {
   return async (dispatch) => {
-    const form = new FormData();
-    Object.keys(data).forEach((key) => {
-      form.append(key, data[key]);
-    });
+    // const form = new FormData();
+    // Object.keys(data).forEach((key) => {
+    //   form.append(key, data[key]);
+    // });
     try {
       dispatch({
         type: 'SET_AUTH_MESSAGE',
@@ -42,7 +42,7 @@ export const dataRegister = (data) => {
       });
       dispatch({
         type: 'DATA_REGISTER',
-        payload: form,
+        payload: data,
       });
     } catch (err) {
       console.log(err);

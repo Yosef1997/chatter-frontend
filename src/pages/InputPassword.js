@@ -5,20 +5,35 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 // import Logo from '../assets/chatter.png';
 import Header from '../components/Header';
-import InputCustom from '../components/InputCustom';
+import InputCustom from '../components/InputPassword';
 import ButtonCircle from '../components/ButtonCircle';
+import {Formik} from 'formik';
 import {connect} from 'react-redux';
-import {signin, detailUser} from '../components/Redux/Action/auth';
+import {dataRegister} from '../components/Redux/Action/auth';
 
 class SignIn extends Component {
   state = {
-    email: '',
-    password: '',
+    isLoading: false,
+    isMessage: false,
   };
+
+  passwordValidation(values) {
+    const errors = {};
+    const {password, repeatPassword} = values;
+    if (!password) {
+      errors.msg = 'Password required';
+    } else if (password.length < 8) {
+      errors.msg = 'Password should have eight characters';
+    } else if (password !== repeatPassword) {
+      errors.msg = "Repeat password doesn't match password";
+    }
+    return errors;
+  }
+
   doLogin = async () => {
     this.props.navigation.navigate('InputPhone');
   };
@@ -31,20 +46,53 @@ class SignIn extends Component {
         <Text style={styles.subTitle}>
           Using at least one latter, one number, and four other character
         </Text>
-        <InputCustom
-          container={styles.inputForm}
-          placeholder="Password"
-          inputStyle={styles.inputStyle}
-        />
-        <InputCustom
-          container={styles.inputForm}
-          placeholder="Repeat password"
-          inputStyle={styles.inputStyle}
-        />
-
-        <View style={styles.btnForm}>
-          <ButtonCircle onPress={this.doLogin}>Next</ButtonCircle>
-        </View>
+        <Formik
+          initialValues={{password: '', repeatPassword: ''}}
+          validate={(values) => this.passwordValidation(values)}
+          onSubmit={(values, {resetForm}) => {
+            this.setState({isLoading: true});
+            this.doLogin(values);
+            setTimeout(() => {
+              resetForm();
+            }, 500);
+          }}>
+          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+            <>
+              <InputCustom
+                container={styles.inputForm}
+                placeholder="Password"
+                inputStyle={styles.inputStyle}
+                value={values.password}
+                onChangeText={handleChange('password')}
+                onBlur={handleBlur('password')}
+              />
+              <InputCustom
+                container={styles.inputForm}
+                placeholder="Repeat password"
+                inputStyle={styles.inputStyle}
+                value={values.repeatPassword}
+                onChangeText={handleChange('repeatPassword')}
+                onBlur={handleBlur('repeatPassword')}
+              />
+              {errors.msg ? (
+                <Text style={styles.textError}>{errors.msg}</Text>
+              ) : null}
+              {this.state.isLoading === true ? (
+                <ActivityIndicator />
+              ) : (
+                <View style={styles.btnForm}>
+                  {values.password === '' ||
+                  values.repeatPassword === '' ||
+                  errors.msg ? (
+                    <ButtonCircle disabled={true} onPress={handleSubmit} />
+                  ) : (
+                    <ButtonCircle disabled={false} onPress={handleSubmit} />
+                  )}
+                </View>
+              )}
+            </>
+          )}
+        </Formik>
       </ScrollView>
     );
   }
@@ -101,12 +149,18 @@ const styles = StyleSheet.create({
   inputForm: {
     flexDirection: 'row',
   },
+  textError: {
+    fontSize: 14,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 });
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-const mapDispatchToProps = {signin, detailUser};
+const mapDispatchToProps = {dataRegister};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

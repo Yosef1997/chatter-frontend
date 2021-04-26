@@ -34,6 +34,7 @@ export default class app extends Component {
             placeholder={this.props.placeholder}
             onChangeText={this.props.onChangeText}
             secureTextEntry={this.state.secureTextEntry}
+            value={this.props.value}
           />
           <TouchableOpacity onPress={this.OnIconPress} style={styles.passIcon}>
             <Icon name={this.state.iconName} size={20} />
@@ -47,10 +48,10 @@ export default class app extends Component {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    borderWidth: 1,
+    borderBottomWidth: 0.5,
     borderRadius: 12,
     paddingHorizontal: 10,
-    marginTop: 10,
+    marginTop: 20,
   },
   passInput: {
     flex: 1,
