@@ -1,27 +1,44 @@
 import React, {Component} from 'react';
 import {
   ScrollView,
-  // Modal,
-  // Text,
+  Text,
   // TouchableOpacity,
-  // View,
+  View,
   StyleSheet,
-  // Image,
+  TextInput,
 } from 'react-native';
-import BackImg from '../assets/background.jpg';
+import Button from '../components/Button';
 import Header from '../components/Header';
 import ModalCamera from '../components/ModalCamera';
-import ModalUserID from '../components/ModalUserID';
-import ModalName from '../components/ModalName';
-import ModalStatus from '../components/ModalStatus';
-import ModalPhone from '../components/ModalPhone';
+import Modal from '../components/ModalName';
 import {connect} from 'react-redux';
 import {detailUser} from '../components/Redux/Action/auth';
 
 class Profil extends Component {
-  async componentDidMount() {
-    const {id} = this.props.auth.user;
-    await this.props.detailUser(id);
+  state = {
+    isLoading: false,
+    isMessage: false,
+  };
+  // async componentDidMount() {
+  //   const {id} = this.props.auth.user;
+  //   await this.props.detailUser(id);
+  // }
+
+  nameValidation(values) {
+    const errors = {};
+    const {name} = values;
+    if (name.length < 3) {
+      errors.msg = 'Name have minimum 3 characters';
+    }
+    return errors;
+  }
+  phoneValidation(values) {
+    const errors = {};
+    const {phone} = values;
+    if (phone.length < 11) {
+      errors.msg = 'Minimum 11 numbers';
+    }
+    return errors;
   }
 
   render() {
@@ -29,27 +46,122 @@ class Profil extends Component {
       <ScrollView style={styles.backImgage}>
         <Header label="Profile" cardText={styles.cardText} />
         <ModalCamera />
-        <ModalName
+        <Modal
           label="Name"
           message="Write your name"
-          // inputText={this.props.auth.detailUser.name}
-        />
-        <ModalStatus
+          inputText="Yosef"
+          initialValues={{name: ''}}
+          validate={(values) => this.nameValidation(values)}
+          onSubmit={(values, {resetForm}) => {
+            this.setState({isLoading: true});
+            this.updateName(values);
+            setTimeout(() => {
+              resetForm();
+            }, 500);
+          }}>
+          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+            <>
+              <TextInput
+                onChangeText={handleChange('name')}
+                onBlur={handleBlur('name')}
+                value={values.name}
+                keyboardType={this.props.keyboardType}
+                style={styles.input}
+              />
+              {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
+
+              <View style={styles.btnForm}>
+                <Button onPress={handleSubmit}>Submit</Button>
+              </View>
+            </>
+          )}
+        </Modal>
+
+        <Modal
           label="Status"
           message="Write your status"
-          // inputText={this.props.auth.detailUser.status}
-        />
-        <ModalPhone
-          label="Phone number"
-          message="Write your Phone number"
-          // inputText={this.props.auth.detailUser.phone}
-          keyboardType="numeric"
-        />
-        <ModalUserID
+          initialValues={{status: ''}}
+          validate={(values) => this.nameValidation(values)}
+          onSubmit={(values, {resetForm}) => {
+            this.setState({isLoading: true});
+            this.updateName(values);
+            setTimeout(() => {
+              resetForm();
+            }, 500);
+          }}>
+          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+            <>
+              <TextInput
+                onChangeText={handleChange('status')}
+                onBlur={handleBlur('status')}
+                value={values.status}
+                keyboardType={this.props.keyboardType}
+                style={styles.input}
+              />
+              {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
+              <View style={styles.btnForm}>
+                <Button onPress={handleSubmit}>Submit</Button>
+              </View>
+            </>
+          )}
+        </Modal>
+
+        <Modal
+          label="Phone Number"
+          message="Write your phone number"
+          initialValues={{phone: ''}}
+          validate={(values) => this.phoneValidation(values)}
+          onSubmit={(values, {resetForm}) => {
+            this.setState({isLoading: true});
+            this.updateName(values);
+            setTimeout(() => {
+              resetForm();
+            }, 500);
+          }}>
+          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+            <>
+              <TextInput
+                onChangeText={handleChange('phone')}
+                onBlur={handleBlur('phone')}
+                value={values.phone}
+                keyboardType={this.props.keyboardType}
+                style={styles.input}
+              />
+              {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
+              <View style={styles.btnForm}>
+                <Button onPress={handleSubmit}>Submit</Button>
+              </View>
+            </>
+          )}
+        </Modal>
+
+        <Modal
           label="User ID"
           message="Write your User ID"
-          // inputText={this.props.auth.detailUser.userID}
-        />
+          initialValues={{userID: ''}}
+          onSubmit={(values, {resetForm}) => {
+            this.setState({isLoading: true});
+            this.updateName(values);
+            setTimeout(() => {
+              resetForm();
+            }, 500);
+          }}>
+          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+            <>
+              <TextInput
+                onChangeText={handleChange('userID')}
+                onBlur={handleBlur('userID')}
+                value={values.userID}
+                keyboardType={this.props.keyboardType}
+                style={styles.input}
+              />
+              {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
+              <View style={styles.btnForm}>
+                <Button onPress={handleSubmit}>Submit</Button>
+              </View>
+            </>
+          )}
+        </Modal>
       </ScrollView>
     );
   }
@@ -84,48 +196,19 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 12,
   },
-  // centeredView: {
-  //   flex: 1,
-  //   justifyContent: 'center',
-  //   alignItems: 'center',
-  //   marginTop: 22,
-  // },
-  // modalView: {
-  //   margin: 20,
-  //   backgroundColor: 'white',
-  //   borderRadius: 20,
-  //   padding: 35,
-  //   alignItems: 'center',
-  //   shadowColor: '#000',
-  //   shadowOffset: {
-  //     width: 0,
-  //     height: 2,
-  //   },
-  //   shadowOpacity: 0.25,
-  //   shadowRadius: 4,
-  //   elevation: 5,
-  // },
-  // button: {
-  //   borderRadius: 12,
-  //   padding: 10,
-  //   elevation: 2,
-  //   marginBottom: 10,
-  // },
-  // buttonOpen: {
-  //   backgroundColor: '#F194FF',
-  // },
-  // buttonClose: {
-  //   backgroundColor: '#ff1616',
-  // },
-  // textStyle: {
-  //   color: 'white',
-  //   fontWeight: 'bold',
-  //   textAlign: 'center',
-  // },
-  // modalText: {
-  //   marginBottom: 15,
-  //   textAlign: 'center',
-  // },
+  input: {
+    borderBottomWidth: 1,
+    width: 200,
+  },
+  btnForm: {
+    marginTop: 20,
+  },
+  textError: {
+    fontSize: 11,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 });
 
 const mapStateToProps = (state) => ({

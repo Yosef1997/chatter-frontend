@@ -34,20 +34,20 @@ class SignIn extends Component {
   }
 
   doLogin = async (values) => {
-    const {dataRegister} = this.props.auth;
-    this.setState({isLoading: true});
-    await this.props.signup({
-      picture: dataRegister.picture,
-      name: dataRegister.name,
-      password: dataRegister.password,
-      phone: values.phone,
-    });
-    setTimeout(() => {
-      this.setState({isLoading: false, isMessage: true});
-    }, 2000);
-    setTimeout(() => {
-      this.setState({isMessage: false});
-    }, 5000);
+    // const {dataRegister} = this.props.auth;
+    // this.setState({isLoading: true});
+    // await this.props.signup({
+    //   picture: dataRegister.picture,
+    //   name: dataRegister.name,
+    //   password: dataRegister.password,
+    //   phone: values.phone,
+    // });
+    // setTimeout(() => {
+    //   this.setState({isLoading: false, isMessage: true});
+    // }, 2000);
+    // setTimeout(() => {
+    //   this.setState({isMessage: false});
+    // }, 5000);
 
     this.props.navigation.navigate('BottomTab');
   };

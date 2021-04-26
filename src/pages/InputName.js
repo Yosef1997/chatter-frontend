@@ -312,12 +312,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
-  // textsuccess: {
-  //   fontSize: 14,
-  //   color: '#00D16C',
-  //   textAlign: 'center',
-  //   marginTop: 10,
-  // },
 });
 
 const mapStateToProps = (state) => ({

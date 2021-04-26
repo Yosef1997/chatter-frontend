@@ -7,13 +7,15 @@ import {
   Pressable,
   View,
 } from 'react-native';
+import Button from '../Button';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {Formik} from 'formik';
 import {connect} from 'react-redux';
 import {updateUser} from '../Redux/Action/auth';
 
 class index extends Component {
   state = {
     modalVisible: false,
-    name: '',
     inputName: this.props.inputText,
   };
 
@@ -21,12 +23,12 @@ class index extends Component {
     this.setState({modalVisible: visible});
   };
   closeModal = async () => {
-    const {name} = this.state;
-    const {id} = this.props.auth.user;
-    const {token} = this.props.auth;
-    const data = new FormData();
-    data.append('name', name);
-    await this.props.updateUser(token, id, data);
+    // const {name} = this.state;
+    // const {id} = this.props.auth.user;
+    // const {token} = this.props.auth;
+    // const data = new FormData();
+    // data.append('name', name);
+    // await this.props.updateUser(token, id, data);
     this.setState({modalVisible: false, inputName: this.state.name});
   };
 
@@ -44,18 +46,33 @@ class index extends Component {
           }}>
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
+              <View style={{alignItems: 'flex-end'}}>
+                <Pressable onPress={this.closeModal}>
+                  <Icon name="close" size={25} />
+                </Pressable>
+              </View>
               <Text style={styles.modalText}>{this.props.label}</Text>
               <Text style={styles.text2Style}>{this.props.message}</Text>
-              <TextInput
-                onChangeText={(name) => this.setState({name})}
-                keyboardType={this.props.keyboardType}
-                style={styles.input}
-              />
-              <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={this.closeModal}>
-                <Text style={styles.btnModal}>Submit</Text>
-              </Pressable>
+              <Formik
+                initialValues={this.props.initialValues}
+                validate={this.props.validate}
+                onSubmit={this.props.onSubmit}>
+                {this.props.children}
+                {/* {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+                  <>
+                    <TextInput
+                      onChangeText={handleChange(this.props.onChangeText)}
+                      onBlur={handleBlur(this.props.onBlur)}
+                      value={this.props.value}
+                      keyboardType={this.props.keyboardType}
+                      style={styles.input}
+                    />
+                    <View style={styles.btnForm}>
+                      <Button onPress={handleSubmit}>Submit</Button>
+                    </View>
+                  </>
+                )} */}
+              </Formik>
             </View>
           </View>
         </Modal>
@@ -82,7 +99,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     backgroundColor: 'white',
-    alignItems: 'center',
+    // alignItems: 'center',
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
@@ -100,9 +117,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     backgroundColor: 'white',
   },
-  buttonClose: {
-    backgroundColor: '#ff1616',
-  },
   textStyle: {
     fontWeight: 'bold',
   },
@@ -119,9 +133,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     width: 200,
   },
-  btnModal: {
-    fontWeight: 'bold',
-    color: 'white',
+  btnForm: {
+    marginTop: 20,
   },
 });
 
