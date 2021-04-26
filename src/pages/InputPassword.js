@@ -117,6 +117,7 @@ const styles = StyleSheet.create({
   },
   backImgage: {
     backgroundColor: '#d9ecf2',
+    marginBottom: 20,
   },
   text: {
     fontSize: 16,

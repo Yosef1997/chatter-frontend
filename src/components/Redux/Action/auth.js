@@ -1,13 +1,16 @@
 import http from '../../Helper/http';
 import jwt from 'jwt-decode';
 
-export const signup = (name, picture, password, phone) => {
+export const signup = (data) => {
   return async (dispatch) => {
-    const params = new URLSearchParams();
-    params.append('picture', picture);
-    params.append('name', name);
-    params.append('password', password);
-    params.append('phone', phone);
+    const params = new FormData();
+    Object.keys(data).forEach((key) => {
+      params.append(key, data[key]);
+    });
+    // params.append('picture', picture);
+    // params.append('name', name);
+    // params.append('password', password);
+    // params.append('phone', phone);
     try {
       dispatch({
         type: 'SET_AUTH_MESSAGE',

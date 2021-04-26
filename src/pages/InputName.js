@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
   },
   inputForm: {
     flexDirection: 'row',
+    marginBottom: 20,
   },
   centeredView: {
     flex: 1,
