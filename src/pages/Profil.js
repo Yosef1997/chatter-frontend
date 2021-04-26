@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
   ScrollView,
   Text,
-  // TouchableOpacity,
+  ActivityIndicator,
   View,
   StyleSheet,
   TextInput,
@@ -69,10 +69,21 @@ class Profil extends Component {
                 style={styles.input}
               />
               {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
-
-              <View style={styles.btnForm}>
-                <Button onPress={handleSubmit}>Submit</Button>
-              </View>
+              {this.state.isLoading === true ? (
+                <ActivityIndicator size="large" color="#ff1616" />
+              ) : (
+                <View style={styles.btnForm}>
+                  {values.name === '' || errors.msg ? (
+                    <Button disabled={true} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled={false} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  )}
+                </View>
+              )}
             </>
           )}
         </Modal>
@@ -98,10 +109,21 @@ class Profil extends Component {
                 keyboardType={this.props.keyboardType}
                 style={styles.input}
               />
-              {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
-              <View style={styles.btnForm}>
-                <Button onPress={handleSubmit}>Submit</Button>
-              </View>
+              {this.state.isLoading === true ? (
+                <ActivityIndicator size="large" color="#ff1616" />
+              ) : (
+                <View style={styles.btnForm}>
+                  {values.status === '' ? (
+                    <Button disabled={true} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled={false} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  )}
+                </View>
+              )}
             </>
           )}
         </Modal>
@@ -128,9 +150,21 @@ class Profil extends Component {
                 style={styles.input}
               />
               {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
-              <View style={styles.btnForm}>
-                <Button onPress={handleSubmit}>Submit</Button>
-              </View>
+              {this.state.isLoading === true ? (
+                <ActivityIndicator size="large" color="#ff1616" />
+              ) : (
+                <View style={styles.btnForm}>
+                  {values.phone === '' || errors.msg ? (
+                    <Button disabled={true} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled={false} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  )}
+                </View>
+              )}
             </>
           )}
         </Modal>
@@ -155,10 +189,21 @@ class Profil extends Component {
                 keyboardType={this.props.keyboardType}
                 style={styles.input}
               />
-              {errors.msg && <Text style={styles.textError}>{errors.msg}</Text>}
-              <View style={styles.btnForm}>
-                <Button onPress={handleSubmit}>Submit</Button>
-              </View>
+              {this.state.isLoading === true ? (
+                <ActivityIndicator size="large" color="#ff1616" />
+              ) : (
+                <View style={styles.btnForm}>
+                  {values.userID === '' ? (
+                    <Button disabled={true} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  ) : (
+                    <Button disabled={false} onPress={handleSubmit}>
+                      Submit
+                    </Button>
+                  )}
+                </View>
+              )}
             </>
           )}
         </Modal>

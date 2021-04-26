@@ -1,53 +1,205 @@
 import React, {Component} from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
-import Modal from 'react-native-dialog-input';
+import {
+  Modal,
+  StyleSheet,
+  Text,
+  Pressable,
+  View,
+  ActivityIndicator,
+} from 'react-native';
+import Button from '../Button';
+import InputCustom from '../../components/InputPassword';
+import Icon from 'react-native-vector-icons/AntDesign';
+import {Formik} from 'formik';
+import {connect} from 'react-redux';
+import {updateUser} from '../Redux/Action/auth';
 
-export default class index extends Component {
+class index extends Component {
   state = {
-    isDialogVisible: false,
-    inputText: this.props.inputText,
+    modalVisible: false,
+    inputEmail: this.props.inputText,
+    isLoading: false,
+    isMessage: false,
   };
-  showDialog(isShow) {
-    this.setState({isDialogVisible: isShow});
+
+  setModalVisible = async (visible) => {
+    this.setState({modalVisible: visible});
+  };
+
+  passwordValidation(values) {
+    const errors = {};
+    const {password, repeatPassword} = values;
+    if (!password) {
+      errors.msg = 'Password required';
+    } else if (password.length < 8) {
+      errors.msg = 'Password should have eight characters';
+    } else if (password !== repeatPassword) {
+      errors.msg = "Repeat password doesn't match password";
+    }
+    return errors;
   }
-  sendInput(inputText) {
-    this.setState({inputText: inputText});
-  }
+
+  doUpdate = async (values) => {
+    // const {user} = this.props.auth;
+    // const {token} = this.props.auth;
+    // await this.props.auth.updateUser(token, user.id, {email: values.email});
+    this.setState({modalVisible: false});
+  };
+
   render() {
+    const {modalVisible} = this.state;
     return (
       <View>
         <Modal
-          isDialogVisible={this.state.isDialogVisible}
-          title={this.props.label}
-          message={this.props.message}
-          textInputProps={this.props.textInputProps}
-          submitInput={(inputText) => {
-            this.sendInput(inputText);
-          }}
-          closeDialog={() => {
-            this.showDialog(false);
-          }}
-        />
-        <TouchableOpacity
-          onPress={() => {
-            this.showDialog(true);
-          }}
-          style={this.props.modal}>
-          <Text style={styles.label}>{this.props.label}</Text>
-        </TouchableOpacity>
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(!modalVisible);
+          }}>
+          <Formik
+            initialValues={{
+              password: '',
+              repeatPassword: '',
+            }}
+            validate={(values) => this.passwordValidation(values)}
+            onSubmit={(values, {resetForm}) => {
+              this.setState({isLoading: true});
+              this.doUpdate(values);
+              setTimeout(() => {
+                resetForm();
+              }, 500);
+            }}>
+            {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+              <>
+                <View style={styles.centeredView}>
+                  <View style={styles.modalView}>
+                    <View style={{alignItems: 'flex-end'}}>
+                      <Pressable onPress={() => this.setModalVisible(false)}>
+                        <Icon name="close" size={25} />
+                      </Pressable>
+                    </View>
+                    <Text style={styles.modalText}>{this.props.label}</Text>
+                    <Text style={styles.text2Style}>{this.props.message}</Text>
+                    <InputCustom
+                      container={styles.inputForm}
+                      placeholder="Password"
+                      inputStyle={styles.inputStyle}
+                      value={values.password}
+                      onChangeText={handleChange('password')}
+                      onBlur={handleBlur('password')}
+                    />
+                    <InputCustom
+                      container={styles.inputForm}
+                      placeholder="Repeat password"
+                      inputStyle={styles.inputStyle}
+                      value={values.repeatPassword}
+                      onChangeText={handleChange('repeatPassword')}
+                      onBlur={handleBlur('repeatPassword')}
+                    />
+                    {errors.msg && (
+                      <Text style={styles.textError}>{errors.msg}</Text>
+                    )}
+                    {this.state.isLoading === true ? (
+                      <ActivityIndicator size="large" color="#ff1616" />
+                    ) : (
+                      <View style={styles.btnForm}>
+                        {values.password === '' ||
+                        values.repeatPassword === '' ||
+                        errors.msg ? (
+                          <Button disabled={true} onPress={handleSubmit}>
+                            Submit
+                          </Button>
+                        ) : (
+                          <Button disabled={false} onPress={handleSubmit}>
+                            Submit
+                          </Button>
+                        )}
+                      </View>
+                    )}
+                  </View>
+                </View>
+              </>
+            )}
+          </Formik>
+        </Modal>
+        <Pressable
+          style={[styles.button, styles.buttonOpen]}
+          onPress={() => this.setModalVisible(true)}>
+          <Text style={styles.textStyle}>{this.props.label}</Text>
+        </Pressable>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  label: {
-    fontSize: 16,
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  modalView: {
+    marginHorizontal: 20,
+    borderRadius: 20,
+    padding: 35,
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 12,
+    padding: 10,
+    elevation: 2,
+    marginHorizontal: 10,
+    marginTop: 10,
+    backgroundColor: 'white',
+  },
+  textStyle: {
+    fontWeight: 'bold',
+  },
+  text2Style: {
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'left',
     fontWeight: 'bold',
   },
   input: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginTop: 5,
+    borderBottomWidth: 1,
+    width: 200,
   },
+  btnForm: {
+    marginTop: 20,
+  },
+  textError: {
+    fontSize: 11,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  // inputStyle: {
+  //   borderBottomWidth: 1,
+  //   marginHorizontal: 16,
+  //   flex: 1,
+  //   marginTop: 30,
+  // },
+  // inputForm: {
+  //   flexDirection: 'row',
+  //   borderWidth: 1,
+  // },
 });
+
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+const mapDispatchToProps = {updateUser};
+export default connect(mapStateToProps, mapDispatchToProps)(index);

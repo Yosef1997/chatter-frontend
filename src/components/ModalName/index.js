@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  Modal,
-  TextInput,
-  StyleSheet,
-  Text,
-  Pressable,
-  View,
-} from 'react-native';
-import Button from '../Button';
+import {Modal, StyleSheet, Text, Pressable, View} from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {Formik} from 'formik';
 import {connect} from 'react-redux';
@@ -58,20 +50,6 @@ class index extends Component {
                 validate={this.props.validate}
                 onSubmit={this.props.onSubmit}>
                 {this.props.children}
-                {/* {({values, errors, handleChange, handleBlur, handleSubmit}) => (
-                  <>
-                    <TextInput
-                      onChangeText={handleChange(this.props.onChangeText)}
-                      onBlur={handleBlur(this.props.onBlur)}
-                      value={this.props.value}
-                      keyboardType={this.props.keyboardType}
-                      style={styles.input}
-                    />
-                    <View style={styles.btnForm}>
-                      <Button onPress={handleSubmit}>Submit</Button>
-                    </View>
-                  </>
-                )} */}
               </Formik>
             </View>
           </View>
@@ -99,7 +77,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 35,
     backgroundColor: 'white',
-    // alignItems: 'center',
     shadowColor: 'black',
     shadowOffset: {
       width: 0,

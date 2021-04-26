@@ -7,9 +7,9 @@ import {connect} from 'react-redux';
 import {signout, detailUser} from '../components/Redux/Action/auth';
 
 class Account extends Component {
-  async componentDidMount() {
-    await this.props.detailUser(this.props.auth.user.id);
-  }
+  // async componentDidMount() {
+  //   await this.props.detailUser(this.props.auth.user.id);
+  // }
   doLogout = () => {
     this.props.signout();
   };
@@ -26,8 +26,7 @@ class Account extends Component {
         <ModalPassword
           label="Password"
           message="Write your password"
-          modal={styles.btn}
-          // textInputProps={{secureTextEntry: true}}
+          textInputProps={{secureTextEntry: true}}
         />
         <TouchableOpacity onPress={this.doLogout} style={styles.btn}>
           <Text style={styles.btnfnt}>Sign Out</Text>
