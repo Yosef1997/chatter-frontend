@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {LogBox} from 'react-native';
+// import {LogBox} from 'react-native';
 import {
   Text,
   View,
@@ -34,7 +34,15 @@ class SignIn extends Component {
     return errors;
   }
 
-  doLogin = async () => {
+  doLogin = async (values) => {
+    this.setState({isLoading: true});
+    await this.props.dataRegister({password: values.password});
+    setTimeout(() => {
+      this.setState({isLoading: false, isMessage: true});
+    }, 2000);
+    setTimeout(() => {
+      this.setState({isMessage: false});
+    }, 5000);
     this.props.navigation.navigate('InputPhone');
   };
 
@@ -78,7 +86,7 @@ class SignIn extends Component {
                 <Text style={styles.textError}>{errors.msg}</Text>
               ) : null}
               {this.state.isLoading === true ? (
-                <ActivityIndicator />
+                <ActivityIndicator size="large" color="#ff1616" />
               ) : (
                 <View style={styles.btnForm}>
                   {values.password === '' ||
