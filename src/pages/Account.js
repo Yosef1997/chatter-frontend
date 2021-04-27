@@ -4,7 +4,7 @@ import Header from '../components/Header';
 import ModalEmail from '../components/ModalEmail';
 import ModalPassword from '../components/ModalPassword';
 import {connect} from 'react-redux';
-import {signout, detailUser} from '../components/Redux/Action/auth';
+import {signout} from '../components/Redux/Action/auth';
 
 class Account extends Component {
   // async componentDidMount() {
@@ -66,6 +66,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {signout, detailUser};
+const mapDispatchToProps = {signout};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Account);

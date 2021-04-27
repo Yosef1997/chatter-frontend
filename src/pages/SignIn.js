@@ -18,7 +18,7 @@ class SignIn extends Component {
     password: '',
   };
   doLogin = async () => {
-    this.props.navigation.navigate('InputPhone');
+    this.props.navigation.navigate('Login');
     // const {email, password} = this.state;
     // await this.props.signin(email, password);
     // await this.props.detailUser(this.props.auth.user.id);

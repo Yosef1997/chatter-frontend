@@ -13,7 +13,7 @@ import ButtonCircle from '../components/ButtonCircle';
 import PickerLocation from '../components/PickerLocation';
 import {Formik} from 'formik';
 import {connect} from 'react-redux';
-import {signup} from '../components/Redux/Action/auth';
+import {signin} from '../components/Redux/Action/auth';
 
 class SignIn extends Component {
   state = {
@@ -33,21 +33,14 @@ class SignIn extends Component {
   }
 
   doLogin = async (values) => {
-    // const {dataRegister} = this.props.auth;
-    // this.setState({isLoading: true});
-    // await this.props.signup({
-    //   picture: dataRegister.picture,
-    //   name: dataRegister.name,
-    //   password: dataRegister.password,
-    //   phone: values.phone,
-    // });
-    // setTimeout(() => {
-    //   this.setState({isLoading: false, isMessage: true});
-    // }, 2000);
-    // setTimeout(() => {
-    //   this.setState({isMessage: false});
-    // }, 5000);
-
+    this.setState({isLoading: true});
+    await this.props.signin(values.phone);
+    setTimeout(() => {
+      this.setState({isLoading: false, isMessage: true});
+    }, 2000);
+    setTimeout(() => {
+      this.setState({isMessage: false});
+    }, 5000);
     this.props.navigation.navigate('BottomTab');
   };
 
@@ -86,6 +79,14 @@ class SignIn extends Component {
               />
               {errors.msg ? (
                 <Text style={styles.textError}>{errors.msg}</Text>
+              ) : null}
+              {this.props.auth.message !== '' && this.state.isMessage ? (
+                <Text style={styles.textsuccess}>
+                  {this.props.auth.message}
+                </Text>
+              ) : null}
+              {this.props.auth.errorMsg !== '' && this.state.isMessage ? (
+                <Text style={styles.textError}>{this.props.auth.errorMsg}</Text>
               ) : null}
               {this.state.isLoading === true ? (
                 <ActivityIndicator size="large" color="#ff1616" />
@@ -174,6 +175,6 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-const mapDispatchToProps = {signup};
+const mapDispatchToProps = {signin};
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

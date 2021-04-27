@@ -34,10 +34,6 @@ export const signup = (data) => {
 
 export const dataRegister = (data) => {
   return async (dispatch) => {
-    // const form = new FormData();
-    // Object.keys(data).forEach((key) => {
-    //   form.append(key, data[key]);
-    // });
     try {
       dispatch({
         type: 'SET_AUTH_MESSAGE',

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import SignIn from '../pages/SignIn';
+import Login from '../pages/Login';
 import InputPhone from '../pages/InputPhone';
 import InputName from '../pages/InputName';
 import InputPassword from '../pages/InputPassword';
@@ -22,6 +23,11 @@ class auth extends Component {
           component={SignIn}
           options={{headerShown: false}}
           name="SignIn"
+        />
+        <Stack.Screen
+          component={Login}
+          options={{headerShown: false}}
+          name="Login"
         />
         <Stack.Screen
           component={InputPhone}

@@ -20,41 +20,43 @@ class router extends Component {
   render() {
     return (
       <Stack.Navigator>
-        <Stack.Screen
-          component={Auth}
-          options={{headerShown: false}}
-          name="Auth"
-        />
-        {/* </React.Fragment>
-        // ) : (
-          <React.Fragment> */}
-        <Stack.Screen
-          component={BottomTab}
-          options={{headerShown: false}}
-          name="BottomTab"
-        />
-        <Stack.Screen
-          component={Search}
-          options={{headerShown: false}}
-          name="Search"
-        />
-        <Stack.Screen
-          component={Profil}
-          options={{headerShown: false}}
-          name="Profil"
-        />
-        <Stack.Screen
-          component={Account}
-          options={{headerShown: false}}
-          name="Account"
-        />
-        <Stack.Screen
-          component={Message}
-          options={{headerShown: false}}
-          name="Message"
-        />
-        {/* </React.Fragment> */}
-        {/* // )} */}
+        {this.props.auth.token === null ? (
+          <>
+            <Stack.Screen
+              component={Auth}
+              options={{headerShown: false}}
+              name="Auth"
+            />
+          </>
+        ) : (
+          <>
+            <Stack.Screen
+              component={BottomTab}
+              options={{headerShown: false}}
+              name="BottomTab"
+            />
+            <Stack.Screen
+              component={Search}
+              options={{headerShown: false}}
+              name="Search"
+            />
+            <Stack.Screen
+              component={Profil}
+              options={{headerShown: false}}
+              name="Profil"
+            />
+            <Stack.Screen
+              component={Account}
+              options={{headerShown: false}}
+              name="Account"
+            />
+            <Stack.Screen
+              component={Message}
+              options={{headerShown: false}}
+              name="Message"
+            />
+          </>
+        )}
       </Stack.Navigator>
     );
   }
