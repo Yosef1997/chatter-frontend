@@ -11,7 +11,7 @@ import {
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {updateUser, deletePicture} from '../Redux/Action/auth';
-// import {REACT_APP_API_URL as API_URL} from '@env';
+import {REACT_APP_API_URL as API_URL} from '@env';
 
 class index extends Component {
   state = {
@@ -46,13 +46,10 @@ class index extends Component {
             type: response.type,
             name: response.fileName,
           };
-          const data = new FormData();
-          data.append('picture', dataImage);
-          await this.props.updateUser(
-            this.props.auth.token,
-            this.props.auth.user.id,
-            data,
-          );
+          await this.props.updateUser(this.props.auth.token, {
+            id: this.props.auth.user.id,
+            picture: dataImage,
+          });
           this.setState({
             isLoading: false,
             message: this.props.auth.message,
@@ -83,13 +80,10 @@ class index extends Component {
           type: response.type,
           name: response.fileName,
         };
-        const data = new FormData();
-        data.append('picture', dataImage);
-        await this.props.updateUser(
-          this.props.auth.token,
-          this.props.auth.user.id,
-          data,
-        );
+        await this.props.updateUser(this.props.auth.token, {
+          id: this.props.auth.user.id,
+          picture: dataImage,
+        });
         this.setState({
           isLoading: false,
           message: this.props.auth.message,
@@ -153,7 +147,17 @@ class index extends Component {
           </View>
         </Modal>
         <TouchableOpacity onPress={() => this.setModalVisible(true)}>
-          <Image source={this.props.source} style={styles.cardImg} />
+          {this.props.auth.user.picture !== null ? (
+            <Image
+              source={{
+                uri: `${API_URL}/upload/profile/${this.props.auth.user.picture}`,
+              }}
+              style={styles.cardImg}
+            />
+          ) : (
+            <Image source={this.props.source} style={styles.cardImg} />
+          )}
+          {/* <Image source={this.props.source} style={styles.cardImg} /> */}
         </TouchableOpacity>
         {this.state.isLoading === true && <ActivityIndicator color="#ff1616" />}
         {this.state.message !== '' && this.state.type === 'danger' ? (
