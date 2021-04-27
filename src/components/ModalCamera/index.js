@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {
   Modal,
   StyleSheet,
-  Alert,
+  ActivityIndicator,
   Text,
   Image,
   TouchableOpacity,
@@ -17,24 +17,30 @@ import {REACT_APP_API_URL as API_URL} from '@env';
 class index extends Component {
   state = {
     modalVisible: false,
+    isLoading: false,
+    message: '',
+    type: 'danger',
   };
 
   setModalVisible = (visible) => {
     this.setState({modalVisible: visible});
   };
   addPhotoCamera = () => {
-    this.setState({modalVisible: false});
+    this.setState({modalVisible: false, isLoading: true});
     launchCamera(
       {
         quality: 0.3,
       },
       async (response) => {
         if (response.didCancel) {
-          Alert('User cancelled upload image');
+          this.setState({
+            isLoading: false,
+            message: 'User cancelled upload image',
+          });
         } else if (response.errorMessage) {
-          Alert('Image Error: ', response.errorMessage);
+          this.setState({isLoading: false, message: response.errorMessage});
         } else if (response.fileSize >= 1 * 1024 * 1024) {
-          Alert('Image to large');
+          this.setState({isLoading: false, message: 'Image to large'});
         } else {
           const dataImage = {
             uri: response.uri,
@@ -48,20 +54,30 @@ class index extends Component {
             this.props.auth.user.id,
             data,
           );
-          Alert(this.props.auth.message, 'success');
+          this.setState({
+            isLoading: false,
+            message: this.props.auth.message,
+            type: 'success',
+          });
         }
+        setTimeout(() => {
+          this.setState({message: '', type: 'danger'});
+        }, 2000);
       },
     );
   };
   addPhotoGallery = () => {
-    this.setState({modalVisible: false});
+    this.setState({modalVisible: false, isLoading: true});
     launchImageLibrary({}, async (response) => {
       if (response.didCancel) {
-        Alert('User cancelled upload image');
+        this.setState({
+          isLoading: false,
+          message: 'User cancelled upload image',
+        });
       } else if (response.errorMessage) {
-        Alert('Image Error: ', response.errorMessage);
+        this.setState({isLoading: false, message: response.errorMessage});
       } else if (response.fileSize >= 1 * 1024 * 1024) {
-        Alert('Image to large');
+        this.setState({isLoading: false, message: 'Image to large'});
       } else {
         const dataImage = {
           uri: response.uri,
@@ -75,10 +91,18 @@ class index extends Component {
           this.props.auth.user.id,
           data,
         );
-        Alert(this.props.auth.message, 'success');
+        this.setState({
+          isLoading: false,
+          message: this.props.auth.message,
+          type: 'success',
+        });
       }
+      setTimeout(() => {
+        this.setState({message: '', type: 'danger'});
+      }, 2000);
     });
   };
+
   render() {
     const {modalVisible} = this.state;
     return (
@@ -125,6 +149,15 @@ class index extends Component {
           <Image source={ProfilImg} style={styles.cardImg} />
           {/* )} */}
         </TouchableOpacity>
+        {this.state.isLoading === true && <ActivityIndicator color="#ff1616" />}
+        {this.state.message !== '' && this.state.type === 'danger' ? (
+          <Text style={styles.error}>{this.state.message}</Text>
+        ) : (
+          <Text style={styles.success}>{this.state.message}</Text>
+        )}
+        {/* {this.state.message !== '' && this.state.type === 'danger' ? (
+          <Text>{this.state.message}</Text>
+        ) : null} */}
       </View>
     );
   }
@@ -149,8 +182,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
+    backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalView: {
     margin: 20,
@@ -191,6 +223,18 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+  },
+  error: {
+    fontSize: 11,
+    color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  success: {
+    fontSize: 11,
+    color: 'green',
+    textAlign: 'center',
+    marginTop: 10,
   },
 });
 const mapStateToProps = (state) => ({
