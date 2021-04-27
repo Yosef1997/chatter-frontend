@@ -36,6 +36,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         user: {...state.user, ...action.payload},
+        message: action.message,
       };
     }
     case 'DELETE_USER': {
@@ -56,6 +57,7 @@ const authReducer = (state = initialState, action) => {
     case 'SET_AUTH_MESSAGE': {
       return {
         ...state,
+        message: '',
         errorMsg: action.payload,
       };
     }

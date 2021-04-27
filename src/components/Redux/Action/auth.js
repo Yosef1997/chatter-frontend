@@ -90,18 +90,19 @@ export const updateUser = (token, data) => {
         form.append(key, data[key]);
       });
       dispatch({
-        type: 'USER_MESSAGE',
+        type: 'SET_AUTH_MESSAGE',
         payload: '',
       });
       const results = await http(token).patch('/user', form);
       dispatch({
         type: 'UPDATE_USER',
         payload: results.data.results,
+        message: results.data.message,
       });
     } catch (err) {
       const {message} = err.response.data;
       dispatch({
-        type: 'USER_MESSAGE',
+        type: 'SET_AUTH_MESSAGE',
         payload: message,
       });
     }

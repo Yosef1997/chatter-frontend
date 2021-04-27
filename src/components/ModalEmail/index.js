@@ -45,7 +45,13 @@ class index extends Component {
     setTimeout(() => {
       this.setState({
         isLoading: false,
+        isMessage: true,
         inputEmail: values.email,
+      });
+    }, 2000);
+    setTimeout(() => {
+      this.setState({
+        isMessage: false,
         modalVisible: false,
       });
     }, 4000);
@@ -92,7 +98,16 @@ class index extends Component {
                     {errors.msg && (
                       <Text style={styles.textError}>{errors.msg}</Text>
                     )}
-
+                    {this.props.auth.message !== '' && this.state.isMessage ? (
+                      <Text style={styles.textSuccess}>
+                        {this.props.auth.message}
+                      </Text>
+                    ) : null}
+                    {this.props.auth.errorMsg !== '' && this.state.isMessage ? (
+                      <Text style={styles.textError}>
+                        {this.props.auth.errorMsg}
+                      </Text>
+                    ) : null}
                     {this.state.isLoading === true ? (
                       <ActivityIndicator size="large" color="#ff1616" />
                     ) : (
@@ -182,6 +197,12 @@ const styles = StyleSheet.create({
   textError: {
     fontSize: 11,
     color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  textSuccess: {
+    fontSize: 11,
+    color: 'green',
     textAlign: 'center',
     marginTop: 10,
   },

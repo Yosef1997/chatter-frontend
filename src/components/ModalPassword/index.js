@@ -17,7 +17,6 @@ import {updateUser} from '../Redux/Action/auth';
 class index extends Component {
   state = {
     modalVisible: false,
-    inputEmail: this.props.inputText,
     isLoading: false,
     isMessage: false,
   };
@@ -39,11 +38,25 @@ class index extends Component {
     return errors;
   }
 
-  doUpdate = async (values) => {
-    // const {user} = this.props.auth;
-    // const {token} = this.props.auth;
-    // await this.props.auth.updateUser(token, user.id, {email: values.email});
-    this.setState({modalVisible: false});
+  updatePassword = async (values) => {
+    const {user} = this.props.auth;
+    const {token} = this.props.auth;
+    await this.props.updateUser(token, {
+      id: user.id,
+      password: values.password,
+    });
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+        isMessage: true,
+      });
+    }, 2000);
+    setTimeout(() => {
+      this.setState({
+        isMessage: false,
+        modalVisible: false,
+      });
+    }, 5000);
   };
 
   render() {
@@ -65,7 +78,7 @@ class index extends Component {
             validate={(values) => this.passwordValidation(values)}
             onSubmit={(values, {resetForm}) => {
               this.setState({isLoading: true});
-              this.doUpdate(values);
+              this.updatePassword(values);
               setTimeout(() => {
                 resetForm();
               }, 500);
@@ -100,6 +113,16 @@ class index extends Component {
                     {errors.msg && (
                       <Text style={styles.textError}>{errors.msg}</Text>
                     )}
+                    {this.props.auth.message !== '' && this.state.isMessage ? (
+                      <Text style={styles.textSuccess}>
+                        {this.props.auth.message}
+                      </Text>
+                    ) : null}
+                    {this.props.auth.errorMsg !== '' && this.state.isMessage ? (
+                      <Text style={styles.textError}>
+                        {this.props.auth.errorMsg}
+                      </Text>
+                    ) : null}
                     {this.state.isLoading === true ? (
                       <ActivityIndicator size="large" color="#ff1616" />
                     ) : (
@@ -186,16 +209,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
   },
-  // inputStyle: {
-  //   borderBottomWidth: 1,
-  //   marginHorizontal: 16,
-  //   flex: 1,
-  //   marginTop: 30,
-  // },
-  // inputForm: {
-  //   flexDirection: 'row',
-  //   borderWidth: 1,
-  // },
+  textSuccess: {
+    fontSize: 11,
+    color: 'green',
+    textAlign: 'center',
+    marginTop: 10,
+  },
 });
 
 const mapStateToProps = (state) => ({
