@@ -23,6 +23,7 @@ const authReducer = (state = initialState, action) => {
         ...state,
         token: action.payload,
         user: action.user,
+        dataRegister: null,
       };
     }
     case 'DATA_REGISTER': {
@@ -37,12 +38,19 @@ const authReducer = (state = initialState, action) => {
         user: {...state.user, ...action.payload},
       };
     }
+    case 'DELETE_USER': {
+      return {
+        ...state,
+        user: {...state.user, ...action.payload},
+      };
+    }
     case 'SIGN_OUT': {
       return {
         ...state,
         token: null,
         message: '',
         errorMsg: '',
+        dataRegister: null,
       };
     }
     case 'SET_AUTH_MESSAGE': {

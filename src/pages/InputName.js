@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import {LogBox} from 'react-native';
 import {
   Text,
   View,
@@ -23,89 +22,6 @@ class SignIn extends Component {
   state = {
     isLoading: false,
     isMessage: false,
-    modalVisible: false,
-    message: '',
-    type: 'danger',
-  };
-
-  componentDidMount() {
-    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
-  }
-
-  setModalVisible = (visible) => {
-    this.setState({modalVisible: visible});
-  };
-
-  addPhotoCamera = () => {
-    this.setState({loading: true, modalVisible: false});
-    launchCamera(
-      {
-        quality: 0.3,
-      },
-      async (response) => {
-        if (response.didCancel) {
-          this.setState({
-            loading: false,
-            message: 'User cancelled upload image',
-          });
-        } else if (response.errorMessage) {
-          this.setState({
-            loading: false,
-            message: `Image Error: ${response.errorMessage}`,
-          });
-        } else if (response.fileSize >= 1 * 1024 * 1024) {
-          this.setState({loading: false, message: 'Image to large'});
-        } else {
-          const dataImage = {
-            uri: response.uri,
-            type: response.type,
-            name: response.fileName,
-          };
-          await this.props.dataRegister({
-            picture: dataImage,
-          });
-          this.setState({
-            loading: false,
-            type: 'success',
-            message: 'Image has change',
-          });
-        }
-        setTimeout(() => {
-          this.setState({message: '', type: 'danger'});
-        }, 2000);
-      },
-    );
-  };
-  addPhotoGallery = () => {
-    this.setState({loading: true, modalVisible: false});
-    launchImageLibrary({}, async (response) => {
-      if (response.didCancel) {
-        this.setState({
-          loading: false,
-          message: 'User cancelled upload image',
-        });
-      } else if (response.errorMessage) {
-        this.setState({
-          loading: false,
-          message: `Image Error: ${response.errorMessage}`,
-        });
-      } else if (response.fileSize >= 1 * 1024 * 1024) {
-        this.setState({loading: false, message: 'Image to large'});
-      } else {
-        const dataImage = {
-          uri: response.uri,
-          type: response.type,
-          name: response.fileName,
-        };
-        await this.props.dataRegister({
-          picture: dataImage,
-        });
-        this.setState({loading: false, message: 'Image has change'});
-      }
-      setTimeout(() => {
-        this.setState({message: '', type: 'danger'});
-      }, 2000);
-    });
   };
 
   nameValidation(values) {
@@ -144,46 +60,13 @@ class SignIn extends Component {
         <Text style={styles.subTitle}>
           Other Chatter's user can see your name and profile
         </Text>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setModalVisible(!this.state.modalVisible);
-          }}>
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-              <TouchableOpacity
-                style={[styles.button, styles.buttonLink]}
-                onPress={() => this.addPhotoCamera()}>
-                <Text style={styles.textStyle}>Camera</Text>
-              </TouchableOpacity>
-              <View style={styles.gap} />
-              <TouchableOpacity
-                style={[styles.button, styles.buttonLink]}
-                onPress={() => this.addPhotoGallery()}>
-                <Text style={styles.textStyle}>Gallery</Text>
-              </TouchableOpacity>
-              <View style={styles.gap} />
-              <TouchableOpacity
-                style={[styles.button, styles.buttonDelete]}
-                onPress={() => this.deletePicture()}>
-                <Text style={styles.textStyle}>Delete Photo Profile</Text>
-              </TouchableOpacity>
-              <View style={styles.gap} />
-              <TouchableOpacity
-                style={[styles.button, styles.buttonDelete]}
-                onPress={() => this.setModalVisible(false)}>
-                <Text style={styles.textStyle}>Close</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
-        <TouchableOpacity
-          onPress={() => this.setModalVisible(true)}
-          style={styles.cameraForm}>
-          <Icon name="camera" size={50} />
-        </TouchableOpacity>
+        {this.state.isLoading === true && <ActivityIndicator color="#ff1616" />}
+        {this.state.message !== '' && this.state.type === 'danger' ? (
+          <Text style={styles.textError}>{this.state.message}</Text>
+        ) : (
+          <Text style={styles.textSuccess}>{this.state.message}</Text>
+        )}
+
         <Formik
           initialValues={{name: ''}}
           validate={(values) => this.nameValidation(values)}
@@ -207,7 +90,6 @@ class SignIn extends Component {
               {errors.msg ? (
                 <Text style={styles.textError}>{errors.msg}</Text>
               ) : null}
-
               {this.state.isLoading === true ? (
                 <ActivityIndicator size="large" color="#ff1616" />
               ) : (
@@ -239,20 +121,6 @@ const styles = StyleSheet.create({
   backImgage: {
     backgroundColor: '#d9ecf2',
   },
-  text: {
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  cameraForm: {
-    borderWidth: 0.5,
-    width: 100,
-    height: 100,
-    borderRadius: 100,
-    paddingVertical: 30,
-    paddingHorizontal: 25,
-    marginTop: 16,
-    marginLeft: 16,
-  },
   title: {
     fontSize: 26,
     fontWeight: 'bold',
@@ -279,41 +147,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginBottom: 20,
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-  },
-  modalView: {
-    width: '100%',
-    backgroundColor: 'white',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    padding: 20,
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2,
-  },
-  buttonLink: {
-    backgroundColor: '#5F2EEA',
-  },
-  buttonDelete: {
-    backgroundColor: 'red',
-  },
-  gap: {
-    height: 24,
-  },
-  textStyle: {
-    color: 'white',
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   textError: {
     fontSize: 14,
     color: 'red',
+    textAlign: 'center',
+    marginTop: 10,
+  },
+  textSuccess: {
+    fontSize: 14,
+    color: 'green',
     textAlign: 'center',
     marginTop: 10,
   },
