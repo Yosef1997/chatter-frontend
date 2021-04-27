@@ -82,7 +82,7 @@ export const signin = (phone) => {
   };
 };
 
-export const updateUser = (token, id, data) => {
+export const updateUser = (token, data) => {
   return async (dispatch) => {
     try {
       const form = new FormData();
@@ -93,7 +93,7 @@ export const updateUser = (token, id, data) => {
         type: 'USER_MESSAGE',
         payload: '',
       });
-      const results = await http(token).patch(`/user/${id}`, form);
+      const results = await http(token).patch('/user', form);
       dispatch({
         type: 'UPDATE_USER',
         payload: results.data.results,

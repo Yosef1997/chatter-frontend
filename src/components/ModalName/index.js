@@ -7,7 +7,7 @@ import {updateUser} from '../Redux/Action/auth';
 
 class index extends Component {
   state = {
-    modalVisible: false,
+    modalVisible: this.props.modalVisible,
     inputName: this.props.inputText,
   };
 
@@ -15,13 +15,7 @@ class index extends Component {
     this.setState({modalVisible: visible});
   };
   closeModal = async () => {
-    // const {name} = this.state;
-    // const {id} = this.props.auth.user;
-    // const {token} = this.props.auth;
-    // const data = new FormData();
-    // data.append('name', name);
-    // await this.props.updateUser(token, id, data);
-    this.setState({modalVisible: false, inputName: this.state.name});
+    this.setState({modalVisible: false});
   };
 
   render() {
@@ -39,7 +33,7 @@ class index extends Component {
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
               <View style={{alignItems: 'flex-end'}}>
-                <Pressable onPress={this.closeModal}>
+                <Pressable onPress={this.props.onPress}>
                   <Icon name="close" size={25} />
                 </Pressable>
               </View>
@@ -56,7 +50,7 @@ class index extends Component {
         </Modal>
         <Pressable
           style={[styles.button, styles.buttonOpen]}
-          onPress={() => this.setModalVisible(true)}>
+          onPress={this.props.onPress}>
           <Text style={styles.textStyle}>{this.props.label}</Text>
           <Text style={styles.text2Style}>{this.state.inputName}</Text>
         </Pressable>

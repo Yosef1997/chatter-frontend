@@ -8,11 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import ProfilImg from '../../assets/F9.jpg';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {connect} from 'react-redux';
-import {updateUser} from '../Redux/Action/auth';
-import {REACT_APP_API_URL as API_URL} from '@env';
+import {updateUser, deletePicture} from '../Redux/Action/auth';
+// import {REACT_APP_API_URL as API_URL} from '@env';
 
 class index extends Component {
   state = {
@@ -103,6 +102,20 @@ class index extends Component {
     });
   };
 
+  deletePicture = async () => {
+    await this.props.deletePicture(this.props.auth.token, {
+      id: this.props.auth.user.id,
+    });
+    this.setState({
+      modalVisible: false,
+      type: 'danger',
+      message: 'Image has deleted',
+    });
+    setTimeout(() => {
+      this.setState({message: '', type: 'danger'});
+    }, 2000);
+  };
+
   render() {
     const {modalVisible} = this.state;
     return (
@@ -128,26 +141,19 @@ class index extends Component {
               </TouchableOpacity>
               <TouchableOpacity
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => this.setModalVisible(!modalVisible)}>
+                onPress={this.deletePicture}>
                 <Text style={styles.textStyle}>Delete photo</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => this.setModalVisible(false)}>
+                <Text style={styles.textStyle}>Close</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
         <TouchableOpacity onPress={() => this.setModalVisible(true)}>
-          {/* {this.props.auth.detailUser.picture &&
-          this.props.auth.detailUser.picture !== 'null' ? (
-            <Image
-              source={{
-                uri: API_URL.concat(
-                  `/upload/profile/${this.props.auth.detailUser.picture}`,
-                ),
-              }}
-              style={styles.cardImg}
-            />
-          ) : ( */}
-          <Image source={ProfilImg} style={styles.cardImg} />
-          {/* )} */}
+          <Image source={this.props.source} style={styles.cardImg} />
         </TouchableOpacity>
         {this.state.isLoading === true && <ActivityIndicator color="#ff1616" />}
         {this.state.message !== '' && this.state.type === 'danger' ? (
@@ -155,9 +161,6 @@ class index extends Component {
         ) : (
           <Text style={styles.success}>{this.state.message}</Text>
         )}
-        {/* {this.state.message !== '' && this.state.type === 'danger' ? (
-          <Text>{this.state.message}</Text>
-        ) : null} */}
       </View>
     );
   }
@@ -182,6 +185,7 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
   modalView: {
@@ -189,7 +193,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 20,
     padding: 35,
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -240,5 +243,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {updateUser};
+const mapDispatchToProps = {updateUser, deletePicture};
 export default connect(mapStateToProps, mapDispatchToProps)(index);

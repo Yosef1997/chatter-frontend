@@ -20,7 +20,7 @@ class Account extends Component {
         <ModalEmail
           label="Email"
           message="Write your email"
-          // inputText={this.props.auth.detailUser.email}
+          inputText={this.props.auth.user.email}
           keyboardType="email-address"
         />
         <ModalPassword

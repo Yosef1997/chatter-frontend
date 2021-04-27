@@ -18,6 +18,8 @@ class index extends Component {
   state = {
     modalVisible: false,
     inputEmail: this.props.inputText,
+    isLoading: false,
+    isMessage: false,
   };
 
   setModalVisible = async (visible) => {
@@ -37,10 +39,16 @@ class index extends Component {
   }
 
   doUpdate = async (values) => {
-    // const {user} = this.props.auth;
-    // const {token} = this.props.auth;
-    // await this.props.auth.updateUser(token, user.id, {email: values.email});
-    this.setState({modalVisible: false});
+    const {user} = this.props.auth;
+    const {token} = this.props.auth;
+    await this.props.updateUser(token, {id: user.id, email: values.email});
+    setTimeout(() => {
+      this.setState({
+        isLoading: false,
+        inputEmail: values.email,
+        modalVisible: false,
+      });
+    }, 4000);
   };
 
   render() {
@@ -59,12 +67,9 @@ class index extends Component {
               email: '',
             }}
             validate={(values) => this.emailValidation(values)}
-            onSubmit={(values, {resetForm}) => {
+            onSubmit={(values) => {
               this.setState({isLoading: true});
               this.doUpdate(values);
-              setTimeout(() => {
-                resetForm();
-              }, 500);
             }}>
             {({values, errors, handleChange, handleBlur, handleSubmit}) => (
               <>
@@ -87,6 +92,7 @@ class index extends Component {
                     {errors.msg && (
                       <Text style={styles.textError}>{errors.msg}</Text>
                     )}
+
                     {this.state.isLoading === true ? (
                       <ActivityIndicator size="large" color="#ff1616" />
                     ) : (
@@ -123,7 +129,6 @@ const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
     marginTop: 22,
     backgroundColor: 'rgba(0,0,0,0.5)',
   },
@@ -166,7 +171,6 @@ const styles = StyleSheet.create({
   },
   input: {
     borderBottomWidth: 1,
-    width: 200,
   },
   btnModal: {
     fontWeight: 'bold',

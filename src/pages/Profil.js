@@ -7,23 +7,20 @@ import {
   StyleSheet,
   TextInput,
 } from 'react-native';
+import ProfilImg from '../assets/F9.jpg';
 import Button from '../components/Button';
 import Header from '../components/Header';
 import ModalCamera from '../components/ModalCamera';
 import Modal from '../components/ModalName';
 import {connect} from 'react-redux';
-import {detailUser} from '../components/Redux/Action/auth';
+import {updateUser} from '../components/Redux/Action/auth';
 
 class Profil extends Component {
   state = {
+    modalVisible: false,
     isLoading: false,
     isMessage: false,
   };
-  // async componentDidMount() {
-  //   const {id} = this.props.auth.user;
-  //   await this.props.detailUser(id);
-  // }
-
   nameValidation(values) {
     const errors = {};
     const {name} = values;
@@ -40,21 +37,43 @@ class Profil extends Component {
     }
     return errors;
   }
+  doUpdate = async (values) => {
+    const {token} = this.props.auth;
+    this.setState({isLoading: true});
+    await this.props.updateUser(token, {
+      id: this.props.auth.user.id,
+      name: values.name,
+      status: values.status,
+      phone: values.phone,
+      userID: values.userID,
+    });
+    setTimeout(() => {
+      this.setState({isLoading: false, isMessage: true});
+    }, 2000);
+    setTimeout(() => {
+      this.setState({isMessage: false});
+    }, 5000);
+    this.setState({modalVisible: false});
+  };
 
   render() {
     return (
       <ScrollView style={styles.backImgage}>
         <Header label="Profile" cardText={styles.cardText} />
-        <ModalCamera />
-        <Modal
+        <ModalCamera source={ProfilImg} />
+        {/* <Modal
           label="Name"
           message="Write your name"
-          inputText="Yosef"
-          initialValues={{name: ''}}
+          onPress={() =>
+            this.setState({modalVisible: !this.state.modalVisible})
+          }
+          modalVisible={this.state.modalVisible}
+          inputText={this.props.auth.user.name}
+          initialValues={{name: this.props.auth.user.name}}
           validate={(values) => this.nameValidation(values)}
           onSubmit={(values, {resetForm}) => {
             this.setState({isLoading: true});
-            this.updateName(values);
+            this.doUpdate(values);
             setTimeout(() => {
               resetForm();
             }, 500);
@@ -91,16 +110,16 @@ class Profil extends Component {
         <Modal
           label="Status"
           message="Write your status"
-          initialValues={{status: ''}}
-          validate={(values) => this.nameValidation(values)}
+          modalVisible={this.state.modalVisible}
+          initialValues={{status: this.props.auth.user.status}}
           onSubmit={(values, {resetForm}) => {
             this.setState({isLoading: true});
-            this.updateName(values);
+            this.doUpdate(values);
             setTimeout(() => {
               resetForm();
             }, 500);
           }}>
-          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+          {({values, handleChange, handleBlur, handleSubmit}) => (
             <>
               <TextInput
                 onChangeText={handleChange('status')}
@@ -113,15 +132,9 @@ class Profil extends Component {
                 <ActivityIndicator size="large" color="#ff1616" />
               ) : (
                 <View style={styles.btnForm}>
-                  {values.status === '' ? (
-                    <Button disabled={true} onPress={handleSubmit}>
-                      Submit
-                    </Button>
-                  ) : (
-                    <Button disabled={false} onPress={handleSubmit}>
-                      Submit
-                    </Button>
-                  )}
+                  <Button disabled={false} onPress={handleSubmit}>
+                    Submit
+                  </Button>
                 </View>
               )}
             </>
@@ -131,11 +144,12 @@ class Profil extends Component {
         <Modal
           label="Phone Number"
           message="Write your phone number"
+          modalVisible={this.state.modalVisible}
           initialValues={{phone: ''}}
           validate={(values) => this.phoneValidation(values)}
           onSubmit={(values, {resetForm}) => {
             this.setState({isLoading: true});
-            this.updateName(values);
+            this.doUpdate(values);
             setTimeout(() => {
               resetForm();
             }, 500);
@@ -172,15 +186,16 @@ class Profil extends Component {
         <Modal
           label="User ID"
           message="Write your User ID"
+          modalVisible={this.state.modalVisible}
           initialValues={{userID: ''}}
           onSubmit={(values, {resetForm}) => {
             this.setState({isLoading: true});
-            this.updateName(values);
+            this.doUpdate(values);
             setTimeout(() => {
               resetForm();
             }, 500);
           }}>
-          {({values, errors, handleChange, handleBlur, handleSubmit}) => (
+          {({values, handleChange, handleBlur, handleSubmit}) => (
             <>
               <TextInput
                 onChangeText={handleChange('userID')}
@@ -206,7 +221,7 @@ class Profil extends Component {
               )}
             </>
           )}
-        </Modal>
+        </Modal> */}
       </ScrollView>
     );
   }
@@ -259,5 +274,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {detailUser};
+const mapDispatchToProps = {updateUser};
 export default connect(mapStateToProps, mapDispatchToProps)(Profil);
