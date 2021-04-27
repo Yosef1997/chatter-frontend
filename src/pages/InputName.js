@@ -134,7 +134,12 @@ class SignIn extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header back="chevron-back" size3={25} cardText={styles.cardText} />
+        <Header
+          goBack={() => this.props.navigation.goBack()}
+          back="chevron-back"
+          size3={25}
+          cardText={styles.cardText}
+        />
         <Text style={styles.title}>Create new account</Text>
         <Text style={styles.subTitle}>
           Other Chatter's user can see your name and profile

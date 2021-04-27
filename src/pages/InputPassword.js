@@ -49,7 +49,12 @@ class SignIn extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header back="chevron-back" size3={25} cardText={styles.cardText} />
+        <Header
+          goBack={() => this.props.navigation.goBack()}
+          back="chevron-back"
+          size3={25}
+          cardText={styles.cardText}
+        />
         <Text style={styles.title}>Create Password</Text>
         <Text style={styles.subTitle}>
           Using at least one latter, one number, and four other character

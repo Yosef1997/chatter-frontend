@@ -6,7 +6,6 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from 'react-native';
-// import Logo from '../assets/chatter.png';
 import Header from '../components/Header';
 import InputCustom from '../components/InputCustom';
 import ButtonCircle from '../components/ButtonCircle';
@@ -54,7 +53,12 @@ class SignIn extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header back="chevron-back" size3={25} cardText={styles.cardText} />
+        <Header
+          goBack={() => this.props.navigation.goBack()}
+          back="chevron-back"
+          size3={25}
+          cardText={styles.cardText}
+        />
         <Text style={styles.title}>
           What's the phone number for this device
         </Text>

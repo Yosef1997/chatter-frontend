@@ -30,7 +30,12 @@ class SignIn extends Component {
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header back="chevron-back" size3={25} cardText={styles.cardText} />
+        <Header
+          goBack={() => this.props.navigation.goBack()}
+          back="chevron-back"
+          size3={25}
+          cardText={styles.cardText}
+        />
         <Text style={styles.title}>Log in to Chatter</Text>
         <Text style={styles.subTitle}>
           Log in with your registered phonre number to get{'\n'}started

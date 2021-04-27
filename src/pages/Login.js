@@ -25,9 +25,9 @@ class SignIn extends Component {
     const errors = {};
     const {phone} = values;
     if (!phone) {
-      errors.msg = 'phone required';
+      errors.msg = 'Phone number required';
     } else if (phone.length <= 11) {
-      errors.msg = 'phone should have eleven characters';
+      errors.msg = 'Phone number minimum 11 numbers';
     }
     return errors;
   }
@@ -41,13 +41,20 @@ class SignIn extends Component {
     setTimeout(() => {
       this.setState({isMessage: false});
     }, 5000);
-    this.props.navigation.navigate('BottomTab');
+    if (this.props.auth.token !== null) {
+      this.props.navigation.navigate('BottomTab');
+    }
   };
 
   render() {
     return (
       <ScrollView style={styles.backImgage}>
-        <Header back="chevron-back" size3={25} cardText={styles.cardText} />
+        <Header
+          goBack={() => this.props.navigation.goBack()}
+          back="chevron-back"
+          size3={25}
+          cardText={styles.cardText}
+        />
         <Text style={styles.title}>
           What's the phone number for this device
         </Text>
