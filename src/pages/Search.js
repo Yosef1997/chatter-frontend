@@ -2,29 +2,29 @@ import React, {Component} from 'react';
 import {ScrollView, TouchableOpacity, StyleSheet, FlatList} from 'react-native';
 import Header from '../components/Header';
 import SearchBar from '../components/InputCustom';
-// import ProfileImg from '../assets/F9.jpg';
+import ProfileImg from '../assets/F9.jpg';
 import CardChat from '../components/CardCustom';
 import {connect} from 'react-redux';
-import {allUser} from '../components/Redux/Action/auth';
-import {detailChatUser} from '../components/Redux/Action/user';
+import {allUser} from '../components/Redux/Action/user';
+import {detailUser} from '../components/Redux/Action/user';
 import {REACT_APP_API_URL as API_URL} from '@env';
 
 class Search extends Component {
   state = {
     search: '',
   };
-  // async componentDidMount() {
-  //   await this.props.allUser(this.props.auth.token);
-  // }
-  // doSearch = (search) => {
-  //   this.setState({search: search}, async () => {
-  //     await this.props.allUser(this.props.auth.token, this.state.search);
-  //   });
-  // };
-  // doChat = async (id) => {
-  //   await this.props.detailChatUser(id);
-  //   this.props.navigation.navigate('Message');
-  // };
+  async componentDidMount() {
+    await this.props.allUser(this.props.auth.token);
+  }
+  doSearch = (search) => {
+    this.setState({search: search}, async () => {
+      await this.props.allUser(this.props.auth.token, this.state.search);
+    });
+  };
+  doChat = async (id) => {
+    await this.props.detailUser(this.props.auth.token, id);
+    this.props.navigation.navigate('Message');
+  };
   render() {
     return (
       <ScrollView style={styles.backImgage}>
@@ -43,21 +43,30 @@ class Search extends Component {
           onChangeText={(search) => this.doSearch(search)}
         />
         <FlatList
-          data={this.props.auth.allUser}
-          keyExtractor={(item, index) => String(item.id)}
+          data={this.props.user.allUser}
+          keyExtractor={(item) => String(item.id)}
           renderItem={({item}) => {
             return (
               <TouchableOpacity onPress={() => this.doChat(item.id)}>
-                <CardChat
-                  source={{
-                    uri: API_URL.concat(`/upload/profile/${item.picture}`),
-                  }}
-                  label={item.name}
-                  message={item.status}
-                  style={styles.card}
-                  // source={ProfileImg}
-                  image={styles.cardImg}
-                />
+                {item.picture === null ? (
+                  <CardChat
+                    label={item.name}
+                    message={item.status}
+                    parent={styles.card}
+                    source={ProfileImg}
+                    image={styles.cardImg}
+                  />
+                ) : (
+                  <CardChat
+                    source={{
+                      uri: API_URL.concat(`/upload/profile/${item.picture}`),
+                    }}
+                    label={item.name}
+                    message={item.status}
+                    parent={styles.card}
+                    image={styles.cardImg}
+                  />
+                )}
               </TouchableOpacity>
             );
           }}
@@ -113,7 +122,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
 });
-const mapDispatchToProps = {allUser, detailChatUser};
+const mapDispatchToProps = {allUser, detailUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Search);

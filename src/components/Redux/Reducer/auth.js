@@ -1,9 +1,5 @@
 const initialState = {
   token: null,
-  // picture: null,
-  // name: null,
-  // password: null,
-  // phone: null,
   dataRegister: null,
   user: null,
   message: '',

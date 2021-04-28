@@ -5,8 +5,8 @@ import CardProfile from '../components/CardCustom';
 import Picker from '../components/Picker';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
-import {detailUser} from '../components/Redux/Action/auth';
-import {detailChatUser} from '../components/Redux/Action/user';
+import {detailUser} from '../components/Redux/Action/user';
+import {detailChat} from '../components/Redux/Action/chat';
 import {REACT_APP_API_URL as API_URL} from '@env';
 
 class Home extends Component {
@@ -49,16 +49,8 @@ class Home extends Component {
             iconStyle={styles.icon}
           />
         </TouchableOpacity>
-        <Picker
-          icon1="persons"
-          text="Groups"
-          navigate={() => this.props.navigation.navigate('Message')}
-        />
-        <Picker
-          icon1="person"
-          text="Friends"
-          navigate={() => this.props.navigation.navigate('Message')}
-        />
+        <Picker icon1="persons" text="Groups" />
+        <Picker icon1="person" text="Friends" />
       </ScrollView>
     );
   }
@@ -111,5 +103,5 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => ({
   auth: state.auth,
 });
-const mapDispatchToProps = {detailUser, detailChatUser};
+const mapDispatchToProps = {detailUser, detailChat};
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

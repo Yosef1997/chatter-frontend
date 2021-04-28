@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import {LogBox} from 'react-native';
 import {
   Text,
   FlatList,
@@ -8,23 +9,28 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Fontisto';
-import {allUser} from '../Redux/Action/auth';
+import ProfileImg from '../../assets/F9.jpg';
+import {allUser} from '../Redux/Action/user';
 import {connect} from 'react-redux';
-import {detailChatUser} from '../Redux/Action/user';
+import {detailUser} from '../Redux/Action/user';
 import {REACT_APP_API_URL as API_URL} from '@env';
 
 class index extends Component {
   state = {
     navbartoggle: false,
   };
+  async componentDidMount() {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    await this.props.allUser(this.props.auth.token);
+  }
   OnIconPress = () => {
     this.setState({
       navbartoggle: !this.state.navbartoggle,
     });
   };
   doChat = async (id) => {
-    await this.props.detailChatUser(id);
     this.props.navigation.navigate('Message');
+    await this.props.detailUser(this.props.auth.token, id);
   };
   render() {
     return (
@@ -38,18 +44,24 @@ class index extends Component {
         </View>
         {this.state.navbartoggle && (
           <FlatList
-            data={this.props.auth.allUser}
-            keyExtractor={(item, index) => String(item.id)}
+            data={this.props.user.allUser}
+            keyExtractor={(item) => String(item.id)}
             renderItem={({item}) => {
               return (
-                <TouchableOpacity onPress={this.props.navigate}>
+                <TouchableOpacity onPress={() => this.doChat(item.id)}>
                   <View style={styles.menu}>
-                    <Image
-                      source={{
-                        uri: API_URL.concat(`/upload/profile/${item.picture}`),
-                      }}
-                      style={styles.cardImg}
-                    />
+                    {item.picture === null ? (
+                      <Image source={ProfileImg} style={styles.cardImg} />
+                    ) : (
+                      <Image
+                        source={{
+                          uri: API_URL.concat(
+                            `/upload/profile/${item.picture}`,
+                          ),
+                        }}
+                        style={styles.cardImg}
+                      />
+                    )}
                     <View style={styles.cardText}>
                       <Text style={styles.label}>{item.name}</Text>
                       <Text style={styles.message}>{item.status}</Text>
@@ -109,7 +121,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
 });
-const mapDispatchToProps = {allUser, detailChatUser};
+const mapDispatchToProps = {allUser, detailUser};
 
 export default connect(mapStateToProps, mapDispatchToProps)(index);
