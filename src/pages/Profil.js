@@ -1,13 +1,5 @@
 import React, {Component} from 'react';
-import {
-  ScrollView,
-  Text,
-  ActivityIndicator,
-  View,
-  StyleSheet,
-  TextInput,
-} from 'react-native';
-import Button from '../components/Button';
+import {ScrollView, StyleSheet} from 'react-native';
 import Header from '../components/Header';
 import ModalCamera from '../components/ModalCamera';
 import ModalName from '../components/ModalName';
