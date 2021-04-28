@@ -17,7 +17,7 @@ import {updateUser} from '../Redux/Action/auth';
 class index extends Component {
   state = {
     modalVisible: false,
-    inputName: this.props.inputText,
+    inputPhone: this.props.inputText,
     isLoading: false,
     isMessage: false,
   };
@@ -26,11 +26,11 @@ class index extends Component {
     this.setState({modalVisible: visible});
   };
 
-  nameValidation(values) {
+  phoneValidation(values) {
     const errors = {};
-    const {name} = values;
-    if (name.length < 3) {
-      errors.msg = 'Name have minimum 3 characters';
+    const {phone} = values;
+    if (phone.length < 11) {
+      errors.msg = 'Minimum 11 numbers';
     }
     return errors;
   }
@@ -38,12 +38,12 @@ class index extends Component {
   doUpdate = async (values) => {
     const {user} = this.props.auth;
     const {token} = this.props.auth;
-    await this.props.updateUser(token, {id: user.id, name: values.name});
+    await this.props.updateUser(token, {id: user.id, phone: values.phone});
     setTimeout(() => {
       this.setState({
         isLoading: false,
         isMessage: true,
-        inputName: values.name,
+        inputPhone: values.phone,
       });
     }, 2000);
     setTimeout(() => {
@@ -67,9 +67,9 @@ class index extends Component {
           }}>
           <Formik
             initialValues={{
-              name: '',
+              phone: this.props.auth.user.phone,
             }}
-            validate={(values) => this.nameValidation(values)}
+            validate={(values) => this.phoneValidation(values)}
             onSubmit={(values) => {
               this.setState({isLoading: true});
               this.doUpdate(values);
@@ -86,9 +86,9 @@ class index extends Component {
                     <Text style={styles.modalText}>{this.props.label}</Text>
                     <Text style={styles.text2Style}>{this.props.message}</Text>
                     <TextInput
-                      onChangeText={handleChange('name')}
-                      onBlur={handleBlur('name')}
-                      value={values.name}
+                      onChangeText={handleChange('phone')}
+                      onBlur={handleBlur('phone')}
+                      value={values.phone}
                       style={styles.input}
                     />
                     {errors.msg && (
@@ -108,7 +108,7 @@ class index extends Component {
                       <ActivityIndicator size="large" color="#ff1616" />
                     ) : (
                       <View style={styles.btnForm}>
-                        {values.name === '' || errors.msg ? (
+                        {values.phone === '' || errors.msg ? (
                           <Button disabled={true} onPress={handleSubmit}>
                             Submit
                           </Button>
@@ -129,7 +129,7 @@ class index extends Component {
           style={[styles.button, styles.buttonOpen]}
           onPress={() => this.setModalVisible(true)}>
           <Text style={styles.textStyle}>{this.props.label}</Text>
-          <Text style={styles.text2Style}>{this.state.inputName}</Text>
+          <Text style={styles.text2Style}>{this.state.inputPhone}</Text>
         </Pressable>
       </View>
     );

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import ProfilImg from '../../assets/F9.jpg';
 import {launchImageLibrary, launchCamera} from 'react-native-image-picker';
 import {connect} from 'react-redux';
 import {updateUser, deletePicture} from '../Redux/Action/auth';
@@ -155,9 +156,8 @@ class index extends Component {
               style={styles.cardImg}
             />
           ) : (
-            <Image source={this.props.source} style={styles.cardImg} />
+            <Image source={ProfilImg} style={styles.cardImg} />
           )}
-          {/* <Image source={this.props.source} style={styles.cardImg} /> */}
         </TouchableOpacity>
         {this.state.isLoading === true && <ActivityIndicator color="#ff1616" />}
         {this.state.message !== '' && this.state.type === 'danger' ? (

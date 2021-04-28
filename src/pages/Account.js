@@ -7,9 +7,6 @@ import {connect} from 'react-redux';
 import {signout} from '../components/Redux/Action/auth';
 
 class Account extends Component {
-  // async componentDidMount() {
-  //   await this.props.detailUser(this.props.auth.user.id);
-  // }
   doLogout = () => {
     this.props.signout();
   };
