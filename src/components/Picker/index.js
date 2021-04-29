@@ -44,32 +44,9 @@ class index extends Component {
         </View>
         {this.state.navbartoggle && (
           <FlatList
-            data={this.props.user.allUser}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity onPress={() => this.doChat(item.id)}>
-                  <View style={styles.menu}>
-                    {item.picture === null ? (
-                      <Image source={ProfileImg} style={styles.cardImg} />
-                    ) : (
-                      <Image
-                        source={{
-                          uri: API_URL.concat(
-                            `/upload/profile/${item.picture}`,
-                          ),
-                        }}
-                        style={styles.cardImg}
-                      />
-                    )}
-                    <View style={styles.cardText}>
-                      <Text style={styles.label}>{item.name}</Text>
-                      <Text style={styles.message}>{item.status}</Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
+            data={this.props.data}
+            keyExtractor={this.props.keyExtractor}
+            renderItem={this.props.renderItem}
           />
         )}
       </View>
@@ -95,14 +72,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     flex: 1,
     marginLeft: 10,
-  },
-  menu: {
-    alignItems: 'center',
-    borderRadius: 16,
-    backgroundColor: 'white',
-    marginHorizontal: 10,
-    flexDirection: 'row',
-    padding: 10,
   },
   cardImg: {
     height: 50,

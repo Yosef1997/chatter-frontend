@@ -1,15 +1,33 @@
 import React, {Component} from 'react';
-import {ScrollView, TouchableOpacity, StyleSheet} from 'react-native';
+import {LogBox} from 'react-native';
+import {
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Image,
+  Text,
+} from 'react-native';
 import Search from '../components/InputCustom';
 import CardProfile from '../components/CardCustom';
 import Picker from '../components/Picker';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
-import {detailUser} from '../components/Redux/Action/user';
+import {allUser, detailUser} from '../components/Redux/Action/user';
 import {detailChat} from '../components/Redux/Action/chat';
 import {REACT_APP_API_URL as API_URL} from '@env';
 
 class Home extends Component {
+  async componentDidMount() {
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    await this.props.allUser(this.props.auth.token);
+  }
+
+  doChat = async (id) => {
+    this.props.navigation.navigate('Message');
+    await this.props.detailUser(this.props.auth.token, id);
+  };
+
   render() {
     return (
       <ScrollView style={styles.backImgage}>
@@ -49,7 +67,34 @@ class Home extends Component {
             iconStyle={styles.icon}
           />
         </TouchableOpacity>
-        <Picker icon1="persons" text="Groups" />
+        <Picker
+          icon1="persons"
+          text="Groups"
+          data={this.props.user.allUser}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity onPress={() => this.doChat(item.id)}>
+                <View style={styles.menu}>
+                  {item.picture === null ? (
+                    <Image source={ProfileImg} style={styles.cardImg} />
+                  ) : (
+                    <Image
+                      source={{
+                        uri: API_URL.concat(`/upload/profile/${item.picture}`),
+                      }}
+                      style={styles.cardImg}
+                    />
+                  )}
+                  <View style={styles.cardText}>
+                    <Text style={styles.label}>{item.name}</Text>
+                    <Text style={styles.message}>{item.status}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
         <Picker icon1="person" text="Friends" />
       </ScrollView>
     );
@@ -98,10 +143,19 @@ const styles = StyleSheet.create({
   icon: {
     marginLeft: 15,
   },
+  menu: {
+    alignItems: 'center',
+    borderRadius: 16,
+    backgroundColor: 'white',
+    marginHorizontal: 10,
+    flexDirection: 'row',
+    padding: 10,
+  },
 });
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  user: state.user,
 });
-const mapDispatchToProps = {detailUser, detailChat};
+const mapDispatchToProps = {allUser, detailUser, detailChat};
 export default connect(mapStateToProps, mapDispatchToProps)(Home);
