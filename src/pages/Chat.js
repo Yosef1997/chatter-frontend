@@ -1,19 +1,27 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, TouchableOpacity} from 'react-native';
+import {LogBox} from 'react-native';
+
+import {ScrollView, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
 import Search from '../components/InputCustom';
 import CardChat from '../components/CardCustom';
 import Header from '../components/Header';
 import ProfileImg from '../assets/F9.jpg';
 import {connect} from 'react-redux';
-import {allChatUser} from '../components/Redux/Action/user';
+import {allChat} from '../components/Redux/Action/chat';
+import {detailUser} from '../components/Redux/Action/user';
 
 class Chat extends Component {
   async componentDidMount() {
-    await this.props.allChatUser(
-      this.props.auth.token,
-      this.props.auth.user.id,
-    );
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+    await this.props.allChat(this.props.auth.token, {
+      id: this.props.auth.user.id,
+    });
   }
+  doChat = async (id) => {
+    await this.props.detailUser(this.props.auth.token, id);
+    this.props.navigation.navigate('Message');
+  };
+
   render() {
     return (
       <ScrollView style={styles.backImgage}>
@@ -31,25 +39,23 @@ class Chat extends Component {
             inputStyle={styles.input}
             iconStyle={styles.icon}
           />
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Message')}>
-            <CardChat
-              source={ProfileImg}
-              label="Yosef"
-              message="hello"
-              parent={styles.card}
-              image={styles.cardImg}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity>
-            <CardChat
-              source={ProfileImg}
-              label="Yosef"
-              message="hello"
-              parent={styles.card}
-              image={styles.cardImg}
-            />
-          </TouchableOpacity>
+          <FlatList
+            data={this.props.chat.allChat}
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity onPress={() => this.doChat(item.idReceiver)}>
+                  <CardChat
+                    source={ProfileImg}
+                    label={item.name}
+                    message={item.message}
+                    parent={styles.card}
+                    image={styles.cardImg}
+                  />
+                </TouchableOpacity>
+              );
+            }}
+          />
         </ScrollView>
       </ScrollView>
     );
@@ -104,7 +110,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  user: state.user,
+  chat: state.chat,
 });
-const mapDispatchToProps = {allChatUser};
+const mapDispatchToProps = {allChat, detailUser};
 export default connect(mapStateToProps, mapDispatchToProps)(Chat);

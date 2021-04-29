@@ -24,8 +24,8 @@ class Home extends Component {
   }
 
   doChat = async (id) => {
-    this.props.navigation.navigate('Message');
     await this.props.detailUser(this.props.auth.token, id);
+    this.props.navigation.navigate('Message');
   };
 
   render() {
@@ -95,7 +95,34 @@ class Home extends Component {
             );
           }}
         />
-        <Picker icon1="person" text="Friends" />
+        <Picker
+          icon1="person"
+          text="Friends"
+          data={this.props.user.allUser}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({item}) => {
+            return (
+              <TouchableOpacity onPress={() => this.doChat(item.id)}>
+                <View style={styles.menu}>
+                  {item.picture === null ? (
+                    <Image source={ProfileImg} style={styles.cardImg} />
+                  ) : (
+                    <Image
+                      source={{
+                        uri: API_URL.concat(`/upload/profile/${item.picture}`),
+                      }}
+                      style={styles.cardImg}
+                    />
+                  )}
+                  <View style={styles.cardText}>
+                    <Text style={styles.label}>{item.name}</Text>
+                    <Text style={styles.message}>{item.status}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
       </ScrollView>
     );
   }

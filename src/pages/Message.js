@@ -28,11 +28,6 @@ class Message extends Component {
               <Text style={styles.textMsg}>fine</Text>
             </View>
           </View>
-          {/* {[
-            ...Array(1000).map((item) => {
-              return <Text>asdbg</Text>;
-            }),
-          ]} */}
         </ScrollView>
         <InputMessage
           Icon="plus"

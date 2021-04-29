@@ -1,13 +1,18 @@
 import http from '../../Helper/http';
 
-export const allChat = (token, id) => {
+export const allChat = (token, data) => {
   return async (dispatch) => {
+    const form = new FormData();
+    Object.keys(data).forEach((key) => {
+      form.append(key, data[key]);
+    });
+    console.log(form, '<<<<<<<<');
     try {
       dispatch({
         type: 'CHAT_MESSAGE',
         payload: '',
       });
-      const results = await http(token).get(`/chat/all/${id}`);
+      const results = await http(token).get('/chat', form);
       dispatch({
         type: 'ALL_CHAT',
         payload: results.data.results,
