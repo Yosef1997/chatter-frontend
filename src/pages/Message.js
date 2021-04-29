@@ -6,10 +6,11 @@ import {connect} from 'react-redux';
 
 class Message extends Component {
   render() {
+    const {detailUser} = this.props.user;
     return (
       <React.Fragment>
         <Header
-          label="Rio"
+          label={detailUser.name}
           icon="call-outline"
           size={25}
           icon1={styles.icon}

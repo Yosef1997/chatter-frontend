@@ -1,6 +1,7 @@
 const initialState = {
   allChat: null,
   detailChat: null,
+  chat: '',
   errorMsg: '',
 };
 
@@ -16,6 +17,12 @@ const chatReducer = (state = initialState, action) => {
       return {
         ...state,
         detailChat: action.payload,
+      };
+    }
+    case 'CREATE_CHAT': {
+      return {
+        ...state,
+        chat: action.payload,
       };
     }
     case 'CHAT_MESSAGE': {

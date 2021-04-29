@@ -48,3 +48,29 @@ export const detailChat = (token, id) => {
     }
   };
 };
+
+export const createChat = (token, data) => {
+  return async (dispatch) => {
+    try {
+      const form = new FormData();
+      Object.keys(data).forEach((key) => {
+        form.append(key, data[key]);
+      });
+      dispatch({
+        type: 'CHAT_MESSAGE',
+        payload: '',
+      });
+      const results = await http(token).post('chat', form);
+      dispatch({
+        type: 'CREATE_CHAT',
+        payload: results.data.message,
+      });
+    } catch (err) {
+      const {message} = err.response.data;
+      dispatch({
+        type: 'CHAT_MESSAGE',
+        payload: message,
+      });
+    }
+  };
+};
