@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import {LogBox} from 'react-native';
 
-import {ScrollView, StyleSheet, TouchableOpacity, FlatList} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Text,
+  View,
+} from 'react-native';
 import Search from '../components/InputCustom';
 import CardChat from '../components/CardCustom';
 import Header from '../components/Header';
@@ -39,23 +46,30 @@ class Chat extends Component {
             inputStyle={styles.input}
             iconStyle={styles.icon}
           />
-          <FlatList
-            data={this.props.chat.allChat}
-            keyExtractor={(item) => String(item.id)}
-            renderItem={({item}) => {
-              return (
-                <TouchableOpacity onPress={() => this.doChat(item.idReceiver)}>
-                  <CardChat
-                    source={ProfileImg}
-                    label={item.name}
-                    message={item.message}
-                    parent={styles.card}
-                    image={styles.cardImg}
-                  />
-                </TouchableOpacity>
-              );
-            }}
-          />
+          {this.props.chat.errorMsg !== 'Data chat not found' ? (
+            <FlatList
+              data={this.props.chat.allChat}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={({item}) => {
+                return (
+                  <TouchableOpacity
+                    onPress={() => this.doChat(item.idReceiver)}>
+                    <CardChat
+                      source={ProfileImg}
+                      label={item.name}
+                      message={item.message}
+                      parent={styles.card}
+                      image={styles.cardImg}
+                    />
+                  </TouchableOpacity>
+                );
+              }}
+            />
+          ) : (
+            <View style={styles.captionForm}>
+              <Text style={styles.caption}>Chat History Empty</Text>
+            </View>
+          )}
         </ScrollView>
       </ScrollView>
     );
@@ -105,6 +119,14 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 15,
+  },
+  caption: {
+    fontSize: 20,
+  },
+  captionForm: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

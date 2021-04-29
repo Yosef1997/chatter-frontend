@@ -1,10 +1,39 @@
 import React, {Component} from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Header from '../components/Header';
 import InputMessage from '../components/InputCustom';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
+import {createChat} from '../components/Redux/Action/chat';
 
 class Message extends Component {
+  state = {
+    message: '',
+  };
+
+  sendChat = async () => {
+    await this.props.createChat(this.props.auth.token, {
+      sender: this.props.auth.user.id,
+      receiver: this.props.user.detailUser.id,
+      message: this.state.message,
+    });
+    // this.props.auth.user.id,
+    // this.props.user.detailUser.id,
+    // this.state.message,
+
+    console.log(
+      this.props.user.detailUser.id,
+      this.state.message,
+      '<<<<<<<<<<<<<<<<<<',
+    );
+  };
+
   render() {
     const {detailUser} = this.props.user;
     return (
@@ -30,15 +59,21 @@ class Message extends Component {
             </View>
           </View>
         </ScrollView>
-        <InputMessage
-          Icon="plus"
-          Icon2="instagram"
-          size={25}
-          iconStyle={styles.icon2}
-          size2={25}
-          container={styles.container}
-          inputStyle={styles.inputStyle}
-        />
+        <View style={styles.container}>
+          <InputMessage
+            Icon="plus"
+            Icon2="instagram"
+            size={25}
+            iconStyle={styles.icon2}
+            size2={25}
+            container={styles.container}
+            inputStyle={styles.inputStyle}
+            onChangeText={(message) => this.setState({message})}
+          />
+          <TouchableOpacity style={styles.iconSend} onPress={this.sendChat}>
+            <Icon name="send-sharp" size={25} color={'#ff1616'} />
+          </TouchableOpacity>
+        </View>
       </React.Fragment>
     );
   }
@@ -59,19 +94,22 @@ const styles = StyleSheet.create({
     backgroundColor: '#d9ecf2',
   },
   icon: {
-    marginRight: 15,
+    marginRight: 5,
   },
   icon2: {
-    marginRight: 10,
+    marginRight: 5,
+  },
+  iconSend: {
+    marginLeft: 5,
   },
   container: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 10,
     backgroundColor: 'white',
+    justifyContent: 'space-evenly',
   },
   inputStyle: {
-    width: 10,
     borderWidth: 0.1,
     flex: 1,
     borderRadius: 22,
@@ -106,7 +144,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
+  auth: state.auth,
   user: state.user,
 });
-
-export default connect(mapStateToProps)(Message);
+const mapDispatchToProps = {createChat};
+export default connect(mapStateToProps, mapDispatchToProps)(Message);

@@ -53,14 +53,19 @@ export const createChat = (token, data) => {
   return async (dispatch) => {
     try {
       const form = new FormData();
+      // form.append('sender', sender);
+      // form.append('receiver', receiver);
+      // form.append('message', message);
+
       Object.keys(data).forEach((key) => {
         form.append(key, data[key]);
       });
+      console.log(form, '<<<<<<<<message');
       dispatch({
         type: 'CHAT_MESSAGE',
         payload: '',
       });
-      const results = await http(token).post('chat', form);
+      const results = await http(token).post('/chat', form);
       dispatch({
         type: 'CREATE_CHAT',
         payload: results.data.message,
